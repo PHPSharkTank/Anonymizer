@@ -7,6 +7,7 @@
         "php": "^7.2",
         "doctrine/annotations": "^1.8",
         "fzaninotto/faker": "^1.9",
+        "nikic/iter": "^2.0",
         "psr/cache": "^1.0",
         "symfony/event-dispatcher": "^4.4.2"
     },
