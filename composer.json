@@ -1,0 +1,33 @@
+{
+    "name": "php-shark-tank/anonymize-bundle",
+    "description": "",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "require": {
+        "php": "^7.2",
+        "doctrine/annotations": "^1.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPSharkTank\\AnonymizeBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPSharkTank\\AnonymizeBundle\\Tests\\": "tests"
+        }
+    },
+    "authors": [
+        {
+            "name": "Eric Hertwig",
+            "email": "eric@ehdev.de"
+        }
+    ],
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}
