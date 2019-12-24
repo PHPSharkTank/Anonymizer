@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\AnonymizeBundle\Visitor;
 
+use PHPSharkTank\AnonymizeBundle\Annotation\PostAnonymizeEvent;
+use PHPSharkTank\AnonymizeBundle\Annotation\PreAnonymizeEvent;
 use PHPSharkTank\AnonymizeBundle\Loader\LoaderInterface;
 use PHPSharkTank\AnonymizeBundle\Metadata\PropertyMetadata;
 use PHPSharkTank\AnonymizeBundle\Exception\MetadataNotFoundException;
 use PHPSharkTank\AnonymizeBundle\Registry\HandlerRegistryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface
 {
@@ -26,12 +29,18 @@ final class GraphNavigator implements GraphNavigatorInterface
      */
     private $stack;
 
-    public function __construct(LoaderInterface $loader, HandlerRegistryInterface $registry)
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
+
+    public function __construct(LoaderInterface $loader, HandlerRegistryInterface $registry, EventDispatcherInterface $dispatcher)
     {
         $this->loader = $loader;
         $this->registry = $registry;
 
         $this->stack = new \SplStack();
+        $this->dispatcher = $dispatcher;
     }
 
     public function visit($value): void
@@ -51,11 +60,19 @@ final class GraphNavigator implements GraphNavigatorInterface
             return;
         }
 
+        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($value));
+
+        if ($event->isPropagationStopped()) {
+            return;
+        }
+
         $this->stack->push($classMetadata);
 
         foreach ($classMetadata->getPropertyMetadata() as $metadata) {
             $this->visitProperty($value, $metadata);
         }
+
+        $this->dispatcher->dispatch(new PostAnonymizeEvent($value));
 
         $this->stack->pop();
     }
