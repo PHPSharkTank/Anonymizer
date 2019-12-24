@@ -10,7 +10,7 @@ use PHPSharkTank\AnonymizeBundle\Loader\LoaderInterface;
 use PHPSharkTank\AnonymizeBundle\Metadata\PropertyMetadata;
 use PHPSharkTank\AnonymizeBundle\Exception\MetadataNotFoundException;
 use PHPSharkTank\AnonymizeBundle\Registry\HandlerRegistryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface
 {
