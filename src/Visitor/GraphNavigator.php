@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\AnonymizeBundle\Visitor;
 
-use PHPSharkTank\AnonymizeBundle\Annotation\PostAnonymizeEvent;
-use PHPSharkTank\AnonymizeBundle\Annotation\PreAnonymizeEvent;
+use PHPSharkTank\AnonymizeBundle\Event\PostAnonymizeEvent;
+use PHPSharkTank\AnonymizeBundle\Event\PreAnonymizeEvent;
 use PHPSharkTank\AnonymizeBundle\Loader\LoaderInterface;
 use PHPSharkTank\AnonymizeBundle\Metadata\PropertyMetadata;
 use PHPSharkTank\AnonymizeBundle\Exception\MetadataNotFoundException;
