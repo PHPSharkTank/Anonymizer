@@ -1,7 +1,7 @@
 {
-    "name": "php-shark-tank/anonymize-bundle",
-    "description": "",
-    "type": "symfony-bundle",
+    "name": "php-shark-tank/anonymizer",
+    "description": "Library to anonymize class properties",
+    "type": "library",
     "license": "MIT",
     "require": {
         "php": "^7.2",

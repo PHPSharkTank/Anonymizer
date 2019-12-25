@@ -6,7 +6,7 @@
          beStrictAboutTestsThatDoNotTestAnything="false"
 >
     <testsuites>
-        <testsuite name="AnonymizeBundle test suite">
+        <testsuite name="Anonymizer Component test suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
