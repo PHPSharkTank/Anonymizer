@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Tests\Handler;
+namespace PHPSharkTank\Anonymizer\Tests\Handler;
 
 use Faker\Generator;
-use PHPSharkTank\AnonymizeBundle\Handler\FakerHandler;
+use PHPSharkTank\Anonymizer\Handler\FakerHandler;
 use PHPUnit\Framework\TestCase;
 
 class FakerHandlerTest extends TestCase

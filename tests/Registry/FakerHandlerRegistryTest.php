@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Tests\Handler;
+namespace PHPSharkTank\Anonymizer\Tests\Handler;
 
-use PHPSharkTank\AnonymizeBundle\Registry\FakerHandlerRegistry;
-use PHPSharkTank\AnonymizeBundle\Handler\FakerHandler;
-use PHPSharkTank\AnonymizeBundle\Handler\HandlerInterface;
-use PHPSharkTank\AnonymizeBundle\Exception\RuntimeException;
+use PHPSharkTank\Anonymizer\Registry\FakerHandlerRegistry;
+use PHPSharkTank\Anonymizer\Handler\FakerHandler;
+use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
+use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use Faker\Generator;
 use Faker\Provider\Lorem;
 use PHPUnit\Framework\TestCase;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Tests\Handler;
+namespace PHPSharkTank\Anonymizer\Tests\Handler;
 
-use PHPSharkTank\AnonymizeBundle\Annotation as Anonymize;
-use PHPSharkTank\AnonymizeBundle\Handler\CallbackHandler;
+use PHPSharkTank\Anonymizer\Annotation as Anonymize;
+use PHPSharkTank\Anonymizer\Handler\CallbackHandler;
 use PHPUnit\Framework\TestCase;
 
 class CallbackHandlerTest extends TestCase

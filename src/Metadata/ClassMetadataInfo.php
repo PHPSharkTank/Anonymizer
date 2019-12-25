@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Metadata;
+namespace PHPSharkTank\Anonymizer\Metadata;
 
 class ClassMetadataInfo
 {

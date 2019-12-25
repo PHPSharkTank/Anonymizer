@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Tests\Anonymizer;
+namespace PHPSharkTank\Anonymizer\Tests;
 
-use PHPSharkTank\AnonymizeBundle\Anonymizer\Anonymizer;
-use PHPSharkTank\AnonymizeBundle\Visitor\GraphNavigatorInterface;
+use PHPSharkTank\Anonymizer\Anonymizer;
+use PHPSharkTank\Anonymizer\Visitor\GraphNavigatorInterface;
 use PHPUnit\Framework\TestCase;
 
 class AnonymizerTest extends TestCase

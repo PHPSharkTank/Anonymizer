@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Event;
+namespace PHPSharkTank\Anonymizer\Event;
 
 class PreAnonymizeEvent extends ObjectEvent
 {

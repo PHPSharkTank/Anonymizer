@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Annotation;
+namespace PHPSharkTank\Anonymizer\Annotation;
 
 use Doctrine\Common\Annotations\Annotation;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Anonymizer;
+namespace PHPSharkTank\Anonymizer;
 
-use PHPSharkTank\AnonymizeBundle\Visitor\GraphNavigatorInterface;
+use PHPSharkTank\Anonymizer\Visitor\GraphNavigatorInterface;
 
 final class Anonymizer implements AnonymizerInterface
 {

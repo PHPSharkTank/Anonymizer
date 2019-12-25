@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Anonymizer;
+namespace PHPSharkTank\Anonymizer;
 
 interface AnonymizerInterface
 {

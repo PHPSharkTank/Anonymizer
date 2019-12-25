@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Loader;
+namespace PHPSharkTank\Anonymizer\Loader;
 
-use PHPSharkTank\AnonymizeBundle\Annotation\AnonymizeValue;
-use PHPSharkTank\AnonymizeBundle\Annotation\EnableAnonymize;
-use PHPSharkTank\AnonymizeBundle\Metadata\ClassMetadataInfo;
-use PHPSharkTank\AnonymizeBundle\Metadata\PropertyMetadata;
-use PHPSharkTank\AnonymizeBundle\Exception\MetadataNotFoundException;
+use PHPSharkTank\Anonymizer\Annotation\AnonymizeValue;
+use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
+use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
+use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
+use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use Doctrine\Common\Annotations\Reader;
 
 final class AnnotationLoader implements LoaderInterface

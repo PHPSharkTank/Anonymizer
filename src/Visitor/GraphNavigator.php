@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Visitor;
+namespace PHPSharkTank\Anonymizer\Visitor;
 
-use PHPSharkTank\AnonymizeBundle\Event\PostAnonymizeEvent;
-use PHPSharkTank\AnonymizeBundle\Event\PreAnonymizeEvent;
-use PHPSharkTank\AnonymizeBundle\Loader\LoaderInterface;
-use PHPSharkTank\AnonymizeBundle\Metadata\PropertyMetadata;
-use PHPSharkTank\AnonymizeBundle\Exception\MetadataNotFoundException;
-use PHPSharkTank\AnonymizeBundle\Registry\HandlerRegistryInterface;
+use PHPSharkTank\Anonymizer\Event\PostAnonymizeEvent;
+use PHPSharkTank\Anonymizer\Event\PreAnonymizeEvent;
+use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
+use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
+use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
+use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface

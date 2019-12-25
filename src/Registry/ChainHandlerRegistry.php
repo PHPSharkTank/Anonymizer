@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Registry;
+namespace PHPSharkTank\Anonymizer\Registry;
 
-use PHPSharkTank\AnonymizeBundle\Handler\HandlerInterface;
-use PHPSharkTank\AnonymizeBundle\Exception\RuntimeException;
+use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
+use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use function iter\toArray;
 
 class ChainHandlerRegistry implements HandlerRegistryInterface

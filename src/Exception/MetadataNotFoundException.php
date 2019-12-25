@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Exception;
+namespace PHPSharkTank\Anonymizer\Exception;
 
 class MetadataNotFoundException extends \Exception
 {

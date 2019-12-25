@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Registry;
+namespace PHPSharkTank\Anonymizer\Registry;
 
-use PHPSharkTank\AnonymizeBundle\Handler\HandlerInterface;
-use PHPSharkTank\AnonymizeBundle\Exception\LogicException;
-use PHPSharkTank\AnonymizeBundle\Exception\RuntimeException;
+use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
+use PHPSharkTank\Anonymizer\Exception\LogicException;
+use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 
 final class HandlerRegistry implements HandlerRegistryInterface
 {

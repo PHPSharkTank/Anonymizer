@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Tests\Event;
+namespace PHPSharkTank\Anonymizer\Tests\Event;
 
-use PHPSharkTank\AnonymizeBundle\Event\ObjectEvent;
+use PHPSharkTank\Anonymizer\Event\ObjectEvent;
 use PHPUnit\Framework\TestCase;
 
 class ObjectEventTest extends TestCase

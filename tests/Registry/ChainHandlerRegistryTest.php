@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Tests\Handler;
+namespace PHPSharkTank\Anonymizer\Tests\Handler;
 
-use PHPSharkTank\AnonymizeBundle\Handler\HandlerInterface;
-use PHPSharkTank\AnonymizeBundle\Registry\ChainHandlerRegistry;
-use PHPSharkTank\AnonymizeBundle\Registry\HandlerRegistryInterface;
-use PHPSharkTank\AnonymizeBundle\Exception\RuntimeException;
+use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
+use PHPSharkTank\Anonymizer\Registry\ChainHandlerRegistry;
+use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
+use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
 class ChainHandlerRegistryTest extends TestCase

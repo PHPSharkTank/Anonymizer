@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Visitor;
+namespace PHPSharkTank\Anonymizer\Visitor;
 
 /**
  * This class implements the visitor pattern and

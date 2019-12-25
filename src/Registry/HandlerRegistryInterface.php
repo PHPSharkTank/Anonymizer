@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Registry;
+namespace PHPSharkTank\Anonymizer\Registry;
 
-use PHPSharkTank\AnonymizeBundle\Handler\HandlerInterface;
+use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 
 interface HandlerRegistryInterface
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\AnonymizeBundle\Loader;
+namespace PHPSharkTank\Anonymizer\Loader;
 
-use PHPSharkTank\AnonymizeBundle\Metadata\ClassMetadataInfo;
+use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 
 interface LoaderInterface
 {
