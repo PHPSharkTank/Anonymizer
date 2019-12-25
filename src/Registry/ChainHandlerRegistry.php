@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Registry;
 
+use PHPSharkTank\Anonymizer\Exception\RegistryNotFoundException;
 use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use function iter\toArray;
@@ -29,6 +30,8 @@ class ChainHandlerRegistry implements HandlerRegistryInterface
                 continue;
             }
         }
+
+        throw new RegistryNotFoundException(sprintf('No matching registry found for %s', $name));
     }
 
     public function register(HandlerInterface $handler): void
