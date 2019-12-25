@@ -31,6 +31,6 @@ class FakerHandler implements HandlerInterface
 
     public function process($object, array $options)
     {
-        return $this->generator->format($this->name);
+        return $this->generator->format($this->name, $options);
     }
 }
