@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Visitor;
 
+use PHPSharkTank\Anonymizer\AnonymizableInterface;
+use PHPSharkTank\Anonymizer\BeenAnonymizedInterface;
 use PHPSharkTank\Anonymizer\Event\PostAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Event\PreAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
@@ -54,6 +56,12 @@ final class GraphNavigator implements GraphNavigatorInterface
 
     private function visitObject($value): void
     {
+        if ($value instanceof AnonymizableInterface) {
+            if (!$value->isAnonymizable()) {
+                return;
+            }
+        }
+
         try {
             $classMetadata = $this->loader->getMetadataFor(get_class($value));
         } catch (MetadataNotFoundException $e) {
@@ -62,10 +70,6 @@ final class GraphNavigator implements GraphNavigatorInterface
 
         $this->dispatcher->dispatch($event = new PreAnonymizeEvent($value));
 
-        if ($event->isPropagationStopped()) {
-            return;
-        }
-
         $this->stack->push($classMetadata);
 
         foreach ($classMetadata->getPropertyMetadata() as $metadata) {
@@ -73,6 +77,10 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
 
         $this->dispatcher->dispatch(new PostAnonymizeEvent($value));
+
+        if ($value instanceof BeenAnonymizedInterface) {
+            $value->beenAnonymized();
+        }
 
         $this->stack->pop();
     }
