@@ -46,7 +46,7 @@ class PropertyMetadata
         return $this->type;
     }
 
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }

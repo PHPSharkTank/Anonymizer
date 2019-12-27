@@ -52,7 +52,7 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
     }
 
-    private function visitObject($value)
+    private function visitObject($value): void
     {
         try {
             $classMetadata = $this->loader->getMetadataFor(get_class($value));
@@ -77,14 +77,14 @@ final class GraphNavigator implements GraphNavigatorInterface
         $this->stack->pop();
     }
 
-    private function visitIterable($value)
+    private function visitIterable($value): void
     {
         foreach ($value as $item) {
             $this->visit($item);
         }
     }
 
-    private function visitProperty($value, PropertyMetadata $metadata)
+    private function visitProperty($value, PropertyMetadata $metadata): void
     {
         $newValue = $metadata->getValue($value);
 
