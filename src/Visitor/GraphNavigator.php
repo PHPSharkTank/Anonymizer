@@ -6,9 +6,9 @@ namespace PHPSharkTank\Anonymizer\Visitor;
 
 use PHPSharkTank\Anonymizer\Event\PostAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Event\PreAnonymizeEvent;
+use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
-use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

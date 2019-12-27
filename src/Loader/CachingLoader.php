@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Loader;
 
-use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
+use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use Psr\Cache\CacheItemPoolInterface;
 
 final class CachingLoader implements LoaderInterface

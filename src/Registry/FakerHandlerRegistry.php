@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Registry;
 
+use Faker\Generator;
+use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use PHPSharkTank\Anonymizer\Handler\FakerHandler;
 use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
-use PHPSharkTank\Anonymizer\Exception\RuntimeException;
-use Faker\Generator;
 
 class FakerHandlerRegistry implements HandlerRegistryInterface
 {

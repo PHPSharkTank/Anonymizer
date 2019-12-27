@@ -51,7 +51,8 @@ class CallbackHandlerTest extends TestCase
 /**
  * @Anonymize\EnableAnonymize
  */
-class User {
+class User
+{
     /**
      * @var string|null
      * @Anonymize\AnonymizeValue(type="callback", options={"method":"removeName"})

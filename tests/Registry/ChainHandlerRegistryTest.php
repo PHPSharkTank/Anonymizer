@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Tests\Registry;
 
+use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 use PHPSharkTank\Anonymizer\Registry\ChainHandlerRegistry;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
-use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
 class ChainHandlerRegistryTest extends TestCase

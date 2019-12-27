@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Registry;
 
-use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 use PHPSharkTank\Anonymizer\Exception\LogicException;
 use PHPSharkTank\Anonymizer\Exception\RuntimeException;
+use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 
 final class HandlerRegistry implements HandlerRegistryInterface
 {

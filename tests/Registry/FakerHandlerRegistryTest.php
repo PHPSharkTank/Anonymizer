@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Tests\Registry;
 
-use PHPSharkTank\Anonymizer\Registry\FakerHandlerRegistry;
-use PHPSharkTank\Anonymizer\Handler\FakerHandler;
-use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
-use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use Faker\Generator;
 use Faker\Provider\Lorem;
+use PHPSharkTank\Anonymizer\Exception\RuntimeException;
+use PHPSharkTank\Anonymizer\Handler\FakerHandler;
+use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
+use PHPSharkTank\Anonymizer\Registry\FakerHandlerRegistry;
 use PHPUnit\Framework\TestCase;
 
 class FakerHandlerRegistryTest extends TestCase

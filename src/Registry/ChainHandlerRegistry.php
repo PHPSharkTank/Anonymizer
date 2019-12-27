@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Registry;
 
-use PHPSharkTank\Anonymizer\Exception\HandlerNotFoundException;
-use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
-use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use function iter\toArray;
+use PHPSharkTank\Anonymizer\Exception\HandlerNotFoundException;
+use PHPSharkTank\Anonymizer\Exception\RuntimeException;
+use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 
 class ChainHandlerRegistry implements HandlerRegistryInterface
 {
