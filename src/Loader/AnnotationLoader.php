@@ -9,6 +9,7 @@ use PHPSharkTank\Anonymizer\Annotation\AnonymizeValue;
 use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
+use PHPSharkTank\Anonymizer\Metadata\MethodMetadata;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 
 final class AnnotationLoader implements LoaderInterface
@@ -42,6 +43,14 @@ final class AnnotationLoader implements LoaderInterface
             $propertyMetadata = new PropertyMetadata($className, $property->getName(), $propertyAnnotation->type);
             $propertyMetadata->setOptions($propertyAnnotation->options);
             $metadata->addPropertyMetadata($propertyMetadata);
+        }
+
+        foreach ($metadata->reflection->getMethods() as $method) {
+            $methodAnnotations = $this->reader->getMethodAnnotations($method);
+            foreach ($methodAnnotations as $methodAnnotation) {
+                $methodMetadata = new MethodMetadata($className, $method->getName(), get_class($methodAnnotation));
+                $metadata->addMethodMetadata($methodMetadata);
+            }
         }
 
         return $metadata;
