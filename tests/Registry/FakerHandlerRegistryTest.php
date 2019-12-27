@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\Anonymizer\Tests\Handler;
+namespace PHPSharkTank\Anonymizer\Tests\Registry;
 
 use PHPSharkTank\Anonymizer\Registry\FakerHandlerRegistry;
 use PHPSharkTank\Anonymizer\Handler\FakerHandler;
