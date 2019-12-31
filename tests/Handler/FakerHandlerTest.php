@@ -30,7 +30,7 @@ class FakerHandlerTest extends TestCase
     public function testProcess()
     {
         $handler = new FakerHandler($this->generator->reveal(), 'foo');
-        $this->generator->format('foo')->willReturn('bar');
+        $this->generator->format('foo', [])->willReturn('bar');
 
         self::assertSame('bar', $handler->process(new \stdClass(), []));
     }
