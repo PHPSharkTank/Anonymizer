@@ -13,7 +13,6 @@ use PHPSharkTank\Anonymizer\Annotation\Type;
 use PHPSharkTank\Anonymizer\Exception\LogicException;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
-use PHPSharkTank\Anonymizer\Metadata\MethodMetadata;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 
 final class AnnotationLoader implements LoaderInterface
@@ -62,11 +61,6 @@ final class AnnotationLoader implements LoaderInterface
         }
 
         foreach ($metadata->reflection->getMethods() as $method) {
-            if ($methodAnnotation = $this->reader->getMethodAnnotation($method, Type::class)) {
-                $methodMetadata = new MethodMetadata($className, $method->getName());
-                $metadata->addMethodMetadata($methodMetadata);
-            }
-
             if ($preMethodAnnotation = $this->reader->getMethodAnnotation($method, PreAnonymize::class)) {
                 if (!$method->isPublic()) {
                     throw new LogicException(sprintf('You can\'t define a @PreAnonymize annotation on a non public method.'));

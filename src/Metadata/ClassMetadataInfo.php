@@ -17,11 +17,6 @@ class ClassMetadataInfo
     public $propertyMetadata = [];
 
     /**
-     * @var array<MethodMetadata>
-     */
-    public $methodMetadata = [];
-
-    /**
      * @var string[]
      */
     public $preAnonymizeable = [];
@@ -53,19 +48,9 @@ class ClassMetadataInfo
         $this->propertyMetadata[$metadata->getName()] = $metadata;
     }
 
-    public function addMethodMetadata(MethodMetadata $metadata): void
-    {
-        $this->methodMetadata[] = $metadata;
-    }
-
     public function getPropertyMetadata(): array
     {
         return $this->propertyMetadata;
-    }
-
-    public function getMethodMetadata(): array
-    {
-        return $this->methodMetadata;
     }
 
     public function __sleep()
@@ -73,7 +58,6 @@ class ClassMetadataInfo
         return [
             'className',
             'propertyMetadata',
-            'methodMetadata',
             'expr',
         ];
     }
