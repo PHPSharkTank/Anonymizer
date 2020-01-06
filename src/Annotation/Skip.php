@@ -10,6 +10,6 @@ use Doctrine\Common\Annotations\Annotation;
  * @Annotation()
  * @Annotation\Target({"CLASS", "PROPERTY"})
  */
-class Expr extends Annotation
+class Skip extends Annotation
 {
 }
