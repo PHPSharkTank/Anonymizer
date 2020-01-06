@@ -60,9 +60,15 @@ final class GraphNavigator implements GraphNavigatorInterface
             return;
         }
 
-        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($value));
+        $event = new PreAnonymizeEvent($value);
 
-        if ($event->isPropagationStopped()) {
+        foreach ($classMetadata->preAnonymizeable as $methodName) {
+            $value->{$methodName}($event);
+        }
+
+        $this->dispatcher->dispatch($event);
+
+        if ($event->isTerminated()) {
             return;
         }
 
@@ -70,6 +76,10 @@ final class GraphNavigator implements GraphNavigatorInterface
 
         foreach ($classMetadata->getPropertyMetadata() as $metadata) {
             $this->visitProperty($value, $metadata);
+        }
+
+        foreach ($classMetadata->postAnonymizeable as $methodName) {
+            $value->{$methodName}($event);
         }
 
         $this->dispatcher->dispatch(new PostAnonymizeEvent($value));

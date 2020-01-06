@@ -12,26 +12,12 @@ class MethodMetadata
 
     private $className;
 
-    private $annotationClass;
-
-    public function __construct(string $class, string $methodName, string $annotationClass)
+    public function __construct(string $class, string $methodName)
     {
         $this->className = $class;
         $this->name = $methodName;
-        $this->annotationClass = $annotationClass;
 
         $this->reflection = new \ReflectionMethod($this->className, $methodName);
-        $this->reflection->setAccessible(true);
-    }
-
-    public function invoke($object): void
-    {
-        $this->reflection->invoke($object);
-    }
-
-    public function getAnnotatinoClass(): string
-    {
-        return $this->annotationClass;
     }
 
     public function __sleep()
@@ -39,13 +25,11 @@ class MethodMetadata
         return [
             'name',
             'className',
-            'annotationClass',
         ];
     }
 
     public function __wakeup()
     {
         $this->reflection = new \ReflectionMethod($this->className, $this->name);
-        $this->reflection->setAccessible(true);
     }
 }

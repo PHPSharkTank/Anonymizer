@@ -15,6 +15,16 @@ class ClassMetadataInfo
     /** @var array<MethodMetadata> */
     public $methodMetadata = [];
 
+    /**
+     * @var string[]
+     */
+    public $preAnonymizeable = [];
+
+    /**
+     * @var string[]
+     */
+    public $postAnonymizeable = [];
+
     public $reflection;
 
     public function __construct(string $className)
