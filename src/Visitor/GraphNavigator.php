@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace PHPSharkTank\Anonymizer\Visitor;
 
 use PHPSharkTank\Anonymizer\AnonymizableInterface;
-use PHPSharkTank\Anonymizer\BeenAnonymizedInterface;
+use PHPSharkTank\Anonymizer\HasBeenAnonymizedInterface;
 use PHPSharkTank\Anonymizer\Event\PostAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Event\PreAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
+use PHPSharkTank\Anonymizer\ExclusionStrategy\StrategyInterface;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
@@ -36,13 +37,23 @@ final class GraphNavigator implements GraphNavigatorInterface
      */
     private $dispatcher;
 
-    public function __construct(LoaderInterface $loader, HandlerRegistryInterface $registry, EventDispatcherInterface $dispatcher)
-    {
+    /**
+     * @var StrategyInterface
+     */
+    private $exclusionStrategy;
+
+    public function __construct(
+        LoaderInterface $loader,
+        HandlerRegistryInterface $registry,
+        StrategyInterface $exclusionStrategy,
+        EventDispatcherInterface $dispatcher
+    ) {
         $this->loader = $loader;
         $this->registry = $registry;
 
         $this->stack = new \SplStack();
         $this->dispatcher = $dispatcher;
+        $this->exclusionStrategy = $exclusionStrategy;
     }
 
     public function visit($value): void
@@ -56,15 +67,13 @@ final class GraphNavigator implements GraphNavigatorInterface
 
     private function visitObject($value): void
     {
-        if ($value instanceof AnonymizableInterface) {
-            if (!$value->isAnonymizable()) {
-                return;
-            }
-        }
-
         try {
             $classMetadata = $this->loader->getMetadataFor(get_class($value));
         } catch (MetadataNotFoundException $e) {
+            return;
+        }
+
+        if ($this->exclusionStrategy->shouldSkipObject($value, $classMetadata)) {
             return;
         }
 
@@ -73,12 +82,16 @@ final class GraphNavigator implements GraphNavigatorInterface
         $this->stack->push($classMetadata);
 
         foreach ($classMetadata->getPropertyMetadata() as $metadata) {
+            if ($this->exclusionStrategy->shouldSkipProperty($value, $metadata)) {
+                continue;
+            }
+
             $this->visitProperty($value, $metadata);
         }
 
         $this->dispatcher->dispatch(new PostAnonymizeEvent($value));
 
-        if ($value instanceof BeenAnonymizedInterface) {
+        if ($value instanceof HasBeenAnonymizedInterface) {
             $value->beenAnonymized();
         }
 
