@@ -28,14 +28,15 @@ final class AnnotationLoader implements LoaderInterface
     {
         $metadata = new ClassMetadataInfo($className);
 
-        /** @var EnableAnonymize $annotation */
+        /** @var EnableAnonymize|null $annotation */
         $annotation = $this->reader->getClassAnnotation($metadata->reflection, EnableAnonymize::class);
 
         if (null === $annotation) {
             throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $className));
         }
 
-        if ($exprAnnotation = $this->reader->getClassAnnotation($metadata->reflection, Expr::class)) {
+        $exprAnnotation = $this->reader->getClassAnnotation($metadata->reflection, Expr::class);
+        if ($exprAnnotation instanceof Expr) {
             $metadata->expr = $exprAnnotation->value;
         }
 
@@ -50,7 +51,8 @@ final class AnnotationLoader implements LoaderInterface
             $propertyMetadata->setOptions($propertyAnnotation->options);
             $metadata->addPropertyMetadata($propertyMetadata);
 
-            if ($exprAnnotation = $this->reader->getPropertyAnnotation($property, Expr::class)) {
+            $exprAnnotation = $this->reader->getPropertyAnnotation($property, Expr::class);
+            if ($exprAnnotation instanceof Expr) {
                 $metadata->expr = $exprAnnotation->value;
             }
         }
