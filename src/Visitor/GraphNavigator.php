@@ -72,7 +72,15 @@ final class GraphNavigator implements GraphNavigatorInterface
             return;
         }
 
-        if ($this->exclusionStrategy->shouldSkipObject($value, $classMetadata)) {
+        $event = new PreAnonymizeEvent($value);
+
+        foreach ($classMetadata->preAnonymizeable as $methodName) {
+            $value->{$methodName}($event);
+        }
+
+        $this->dispatcher->dispatch($event);
+
+        if ($event->isTerminated() || $this->exclusionStrategy->shouldSkipObject($value, $classMetadata)) {
             return;
         }
 
@@ -86,6 +94,10 @@ final class GraphNavigator implements GraphNavigatorInterface
             }
 
             $this->visitProperty($value, $metadata);
+        }
+
+        foreach ($classMetadata->postAnonymizeable as $methodName) {
+            $value->{$methodName}($event);
         }
 
         $this->dispatcher->dispatch(new PostAnonymizeEvent($value));

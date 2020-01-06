@@ -17,6 +17,16 @@ class ClassMetadataInfo
     public $propertyMetadata = [];
 
     /**
+     * @var string[]
+     */
+    public $preAnonymizeable = [];
+
+    /**
+     * @var string[]
+     */
+    public $postAnonymizeable = [];
+
+    /**
      * @var \ReflectionClass
      */
     public $reflection;

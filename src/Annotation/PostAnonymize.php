@@ -7,9 +7,8 @@ namespace PHPSharkTank\Anonymizer\Annotation;
 use Doctrine\Common\Annotations\Annotation;
 
 /**
- * @Annotation()
- * @Annotation\Target({"CLASS", "PROPERTY"})
+ * @Annotation\Target("METHOD")
  */
-class Expr extends Annotation
+class PostAnonymize extends Annotation
 {
 }
