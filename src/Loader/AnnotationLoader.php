@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace PHPSharkTank\Anonymizer\Loader;
 
 use Doctrine\Common\Annotations\Reader;
+use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
 use PHPSharkTank\Anonymizer\Annotation\Expr;
 use PHPSharkTank\Anonymizer\Annotation\Type;
-use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;

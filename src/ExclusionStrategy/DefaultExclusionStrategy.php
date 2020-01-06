@@ -16,7 +16,6 @@ final class DefaultExclusionStrategy implements StrategyInterface
             return false;
         }
 
-
         return false === $object->isAnonymizable();
     }
 

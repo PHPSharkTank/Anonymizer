@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Visitor;
 
-use PHPSharkTank\Anonymizer\AnonymizableInterface;
-use PHPSharkTank\Anonymizer\HasBeenAnonymizedInterface;
 use PHPSharkTank\Anonymizer\Event\PostAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Event\PreAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\ExclusionStrategy\StrategyInterface;
+use PHPSharkTank\Anonymizer\HasBeenAnonymizedInterface;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
