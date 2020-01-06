@@ -7,10 +7,12 @@ namespace PHPSharkTank\Anonymizer\Visitor;
 use PHPSharkTank\Anonymizer\Event\PostAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Event\PreAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
+use PHPSharkTank\Anonymizer\ExclusionStrategy\StrategyInterface;
+use PHPSharkTank\Anonymizer\HasBeenAnonymizedInterface;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface
 {
@@ -34,13 +36,23 @@ final class GraphNavigator implements GraphNavigatorInterface
      */
     private $dispatcher;
 
-    public function __construct(LoaderInterface $loader, HandlerRegistryInterface $registry, EventDispatcherInterface $dispatcher)
-    {
+    /**
+     * @var StrategyInterface
+     */
+    private $exclusionStrategy;
+
+    public function __construct(
+        LoaderInterface $loader,
+        HandlerRegistryInterface $registry,
+        StrategyInterface $exclusionStrategy,
+        EventDispatcherInterface $dispatcher
+    ) {
         $this->loader = $loader;
         $this->registry = $registry;
 
         $this->stack = new \SplStack();
         $this->dispatcher = $dispatcher;
+        $this->exclusionStrategy = $exclusionStrategy;
     }
 
     public function visit($value): void
@@ -60,19 +72,27 @@ final class GraphNavigator implements GraphNavigatorInterface
             return;
         }
 
-        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($value));
-
-        if ($event->isPropagationStopped()) {
+        if ($this->exclusionStrategy->shouldSkipObject($value, $classMetadata)) {
             return;
         }
+
+        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($value));
 
         $this->stack->push($classMetadata);
 
         foreach ($classMetadata->getPropertyMetadata() as $metadata) {
+            if ($this->exclusionStrategy->shouldSkipProperty($value, $metadata)) {
+                continue;
+            }
+
             $this->visitProperty($value, $metadata);
         }
 
         $this->dispatcher->dispatch(new PostAnonymizeEvent($value));
+
+        if ($value instanceof HasBeenAnonymizedInterface) {
+            $value->beenAnonymized();
+        }
 
         $this->stack->pop();
     }
