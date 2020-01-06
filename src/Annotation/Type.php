@@ -9,9 +9,9 @@ use Doctrine\Common\Annotations\Annotation;
 /**
  * @Annotation\Target("PROPERTY")
  */
-class AnonymizeValue extends Annotation
+class Type extends Annotation
 {
-    public $type = 'text';
+    public $value = 'text';
 
     public $options = [];
 }

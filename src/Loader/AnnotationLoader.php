@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace PHPSharkTank\Anonymizer\Loader;
 
 use Doctrine\Common\Annotations\Reader;
-use PHPSharkTank\Anonymizer\Annotation\AnonymizeValue;
 use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
+use PHPSharkTank\Anonymizer\Annotation\Expr;
 use PHPSharkTank\Anonymizer\Annotation\PostAnonymize;
 use PHPSharkTank\Anonymizer\Annotation\PreAnonymize;
+use PHPSharkTank\Anonymizer\Annotation\Type;
 use PHPSharkTank\Anonymizer\Exception\LogicException;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
@@ -31,25 +32,37 @@ final class AnnotationLoader implements LoaderInterface
     {
         $metadata = new ClassMetadataInfo($className);
 
+        /** @var EnableAnonymize|null $annotation */
         $annotation = $this->reader->getClassAnnotation($metadata->reflection, EnableAnonymize::class);
 
         if (null === $annotation) {
             throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $className));
         }
 
+        $exprAnnotation = $this->reader->getClassAnnotation($metadata->reflection, Expr::class);
+        if ($exprAnnotation instanceof Expr) {
+            $metadata->expr = $exprAnnotation->value;
+        }
+
         foreach ($metadata->reflection->getProperties() as $property) {
-            $propertyAnnotation = $this->reader->getPropertyAnnotation($property, AnonymizeValue::class);
-            if (!$propertyAnnotation instanceof AnonymizeValue) {
+            $propertyAnnotation = $this->reader->getPropertyAnnotation($property, Type::class);
+
+            if (!$propertyAnnotation instanceof Type) {
                 continue;
             }
 
-            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $propertyAnnotation->type);
+            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $propertyAnnotation->value);
             $propertyMetadata->setOptions($propertyAnnotation->options);
             $metadata->addPropertyMetadata($propertyMetadata);
+
+            $exprAnnotation = $this->reader->getPropertyAnnotation($property, Expr::class);
+            if ($exprAnnotation instanceof Expr) {
+                $metadata->expr = $exprAnnotation->value;
+            }
         }
 
         foreach ($metadata->reflection->getMethods() as $method) {
-            if ($methodAnnotation = $this->reader->getMethodAnnotation($method, AnonymizeValue::class)) {
+            if ($methodAnnotation = $this->reader->getMethodAnnotation($method, Type::class)) {
                 $methodMetadata = new MethodMetadata($className, $method->getName());
                 $metadata->addMethodMetadata($methodMetadata);
             }

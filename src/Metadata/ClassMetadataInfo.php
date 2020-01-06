@@ -6,13 +6,19 @@ namespace PHPSharkTank\Anonymizer\Metadata;
 
 class ClassMetadataInfo
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     public $className;
 
-    /** @var array<string, PropertyMetadata> */
+    /**
+     * @var array<string, PropertyMetadata>
+     */
     public $propertyMetadata = [];
 
-    /** @var array<MethodMetadata> */
+    /**
+     * @var array<MethodMetadata>
+     */
     public $methodMetadata = [];
 
     /**
@@ -25,7 +31,15 @@ class ClassMetadataInfo
      */
     public $postAnonymizeable = [];
 
+    /**
+     * @var \ReflectionClass
+     */
     public $reflection;
+
+    /**
+     * @var string
+     */
+    public $expr = '';
 
     public function __construct(string $className)
     {
@@ -60,6 +74,7 @@ class ClassMetadataInfo
             'className',
             'propertyMetadata',
             'methodMetadata',
+            'expr',
         ];
     }
 

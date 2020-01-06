@@ -4,17 +4,40 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Metadata;
 
+/**
+ * @internal
+ */
 class PropertyMetadata
 {
+    /**
+     * @var \ReflectionProperty
+     */
     private $reflection;
 
+    /**
+     * @var string
+     */
     private $name;
 
+    /**
+     * @var string
+     */
     private $className;
 
+    /**
+     * @var string
+     */
     private $type;
 
+    /**
+     * @var array<string, mixed>
+     */
     private $options = [];
+
+    /**
+     * @var string
+     */
+    public $expr = '';
 
     public function __construct(string $class, string $propertyName, string $type = 'text')
     {
@@ -63,6 +86,7 @@ class PropertyMetadata
             'className',
             'type',
             'options',
+            'expr',
         ];
     }
 
