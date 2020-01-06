@@ -56,18 +56,14 @@ final class AnnotationLoader implements LoaderInterface
 
             if ($preMethodAnnotation = $this->reader->getMethodAnnotation($method, PreAnonymize::class)) {
                 if (!$method->isPublic()) {
-                    throw new LogicException(sprintf(
-                        'You can\'t define a @PreAnonymize annotation on a non public method.'
-                    ));
+                    throw new LogicException(sprintf('You can\'t define a @PreAnonymize annotation on a non public method.'));
                 }
 
                 $metadata->preAnonymizeable[] = $method->getName();
             }
             if ($preMethodAnnotation = $this->reader->getMethodAnnotation($method, PostAnonymize::class)) {
                 if (!$method->isPublic()) {
-                    throw new LogicException(sprintf(
-                        'You can\'t define a @PostAnonymize annotation on a non public method.'
-                    ));
+                    throw new LogicException(sprintf('You can\'t define a @PostAnonymize annotation on a non public method.'));
                 }
 
                 $metadata->postAnonymizeable[] = $method->getName();
