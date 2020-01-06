@@ -12,7 +12,7 @@ use PHPSharkTank\Anonymizer\HasBeenAnonymizedInterface;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface
 {
