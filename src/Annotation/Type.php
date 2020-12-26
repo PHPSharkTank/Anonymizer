@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Annotation;
 
-use Doctrine\Common\Annotations\Annotation;
-
-/**
- * @Annotation\Target("PROPERTY")
- */
-class Type extends Annotation
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
+class Type
 {
-    public $value = 'text';
+    public string $value;
+    public array $options;
 
-    public $options = [];
+    public function __construct(string $value = 'text', array $options = [])
+    {
+        $this->value = $value;
+        $this->options = $options;
+    }
 }
