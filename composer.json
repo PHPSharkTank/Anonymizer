@@ -12,8 +12,9 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.17",
+        "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/phpstan": "^0.12.63",
-        "phpunit/phpunit": "^8",
+        "phpunit/phpunit": "^9",
         "symfony/expression-language": "^3.4 || ^4.4 || ^5.0"
     },
     "autoload": {
