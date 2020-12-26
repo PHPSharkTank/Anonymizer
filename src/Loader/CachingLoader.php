@@ -10,14 +10,9 @@ use Psr\Cache\CacheItemPoolInterface;
 
 final class CachingLoader implements LoaderInterface
 {
-    /**
-     * @var LoaderInterface
-     */
-    private $delegate;
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $pool;
+    private LoaderInterface $delegate;
+
+    private CacheItemPoolInterface $pool;
 
     public function __construct(LoaderInterface $delegate, CacheItemPoolInterface $pool)
     {

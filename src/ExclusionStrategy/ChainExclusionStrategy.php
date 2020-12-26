@@ -12,7 +12,7 @@ final class ChainExclusionStrategy implements StrategyInterface
     /**
      * @var StrategyInterface[]
      */
-    private $strategies;
+    private array $strategies;
 
     public function __construct(iterable $strategies)
     {
@@ -26,7 +26,7 @@ final class ChainExclusionStrategy implements StrategyInterface
         $this->strategies[] = $strategy;
     }
 
-    public function shouldSkipObject($object, ClassMetadataInfo $metadataInfo): bool
+    public function shouldSkipObject(object $object, ClassMetadataInfo $metadataInfo): bool
     {
         foreach ($this->strategies as $strategy) {
             if ($strategy->shouldSkipObject(...func_get_args())) {
@@ -37,7 +37,7 @@ final class ChainExclusionStrategy implements StrategyInterface
         return false;
     }
 
-    public function shouldSkipProperty($object, PropertyMetadata $metadata): bool
+    public function shouldSkipProperty(object $object, PropertyMetadata $metadata): bool
     {
         foreach ($this->strategies as $strategy) {
             if ($strategy->shouldSkipProperty(...func_get_args())) {

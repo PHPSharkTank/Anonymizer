@@ -30,7 +30,9 @@ final class AnnotationLoader implements LoaderInterface
         $exprAnnotation = $reflectionClass->getAttributes(Skip::class, \ReflectionAttribute::IS_INSTANCEOF);
 
         if (count($exprAnnotation)) {
-            $metadata->expr = $exprAnnotation[0]->newInstance()->value;
+            /** @var Skip $skip */
+            $skip = $exprAnnotation[0]->newInstance();
+            $metadata->expr = $skip->value;
         }
 
         foreach ($reflectionClass->getProperties() as $property) {
@@ -40,14 +42,18 @@ final class AnnotationLoader implements LoaderInterface
                 continue;
             }
 
-            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $propertyAnnotation[0]->newInstance()->value);
-            $propertyMetadata->setOptions($propertyAnnotation[0]->newInstance()->options);
+            /** @var Type $type */
+            $type = $propertyAnnotation[0]->newInstance();
+            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $type->value);
+            $propertyMetadata->setOptions($type->options);
             $metadata->addPropertyMetadata($propertyMetadata);
 
             $exprAnnotation = $property->getAttributes(Skip::class, \ReflectionAttribute::IS_INSTANCEOF);
 
             if (count($exprAnnotation)) {
-                $propertyMetadata->expr = $exprAnnotation[0]->newInstance()->value;
+                /** @var Skip $skip */
+                $skip = $exprAnnotation[0]->newInstance();
+                $propertyMetadata->expr = $skip->value;
             }
         }
 

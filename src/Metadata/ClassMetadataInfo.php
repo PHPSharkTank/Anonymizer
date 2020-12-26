@@ -4,37 +4,30 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Metadata;
 
+use PHPSharkTank\Anonymizer\Exception\LogicException;
+
 class ClassMetadataInfo
 {
-    /**
-     * @var string
-     */
-    public $className;
+    public string $className;
 
     /**
      * @var array<string, PropertyMetadata>
      */
-    public $propertyMetadata = [];
+    public array $propertyMetadata = [];
 
     /**
      * @var string[]
      */
-    public $preAnonymizeable = [];
+    public array $preAnonymizeable = [];
 
     /**
      * @var string[]
      */
-    public $postAnonymizeable = [];
+    public array $postAnonymizeable = [];
 
-    /**
-     * @var \ReflectionClass
-     */
-    public $reflection;
+    public \ReflectionClass $reflection;
 
-    /**
-     * @var string
-     */
-    public $expr = '';
+    public string $expr = '';
 
     /**
      * @var bool
@@ -43,6 +36,10 @@ class ClassMetadataInfo
 
     public function __construct(string $className)
     {
+        if (!class_exists($className)) {
+            throw new LogicException(sprintf('%s is not a vaid class', $className));
+        }
+
         $this->className = $className;
 
         $this->reflection = new \ReflectionClass($this->className);
@@ -58,7 +55,7 @@ class ClassMetadataInfo
         return $this->propertyMetadata;
     }
 
-    public function __sleep()
+    public function __sleep(): array
     {
         return [
             'className',
@@ -70,7 +67,7 @@ class ClassMetadataInfo
         ];
     }
 
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->reflection = new \ReflectionClass($this->className);
     }
