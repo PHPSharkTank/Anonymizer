@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Loader;
 
-use Doctrine\Common\Annotations\Reader;
 use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
 use PHPSharkTank\Anonymizer\Annotation\PostAnonymize;
 use PHPSharkTank\Anonymizer\Annotation\PreAnonymize;
@@ -17,63 +16,59 @@ use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 
 final class AnnotationLoader implements LoaderInterface
 {
-    /**
-     * @var Reader
-     */
-    private $reader;
-
-    public function __construct(Reader $reader)
-    {
-        $this->reader = $reader;
-    }
-
     public function getMetadataFor(string $className): ClassMetadataInfo
     {
         $metadata = new ClassMetadataInfo($className);
+        $reflectionClass = $metadata->reflection;
 
-        /** @var EnableAnonymize|null $annotation */
-        $annotation = $this->reader->getClassAnnotation($metadata->reflection, EnableAnonymize::class);
+        $annotation = $reflectionClass->getAttributes(EnableAnonymize::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-        if ($annotation) {
+        if (0 < count($annotation)) {
             $metadata->enabled = true;
         }
 
-        $exprAnnotation = $this->reader->getClassAnnotation($metadata->reflection, Skip::class);
-        if ($exprAnnotation instanceof Skip) {
-            $metadata->expr = $exprAnnotation->value;
+        $exprAnnotation = $reflectionClass->getAttributes(Skip::class, \ReflectionAttribute::IS_INSTANCEOF);
+
+        if (count($exprAnnotation)) {
+            $metadata->expr = $exprAnnotation[0]->newInstance()->value;
         }
 
-        foreach ($metadata->reflection->getProperties() as $property) {
-            $propertyAnnotation = $this->reader->getPropertyAnnotation($property, Type::class);
+        foreach ($reflectionClass->getProperties() as $property) {
+            $propertyAnnotation = $property->getAttributes(Type::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-            if (!$propertyAnnotation instanceof Type) {
+            if (0 === count($propertyAnnotation)) {
                 continue;
             }
 
-            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $propertyAnnotation->value);
-            $propertyMetadata->setOptions($propertyAnnotation->options);
+            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $propertyAnnotation[0]->newInstance()->value);
+            $propertyMetadata->setOptions($propertyAnnotation[0]->newInstance()->options);
             $metadata->addPropertyMetadata($propertyMetadata);
 
-            $exprAnnotation = $this->reader->getPropertyAnnotation($property, Skip::class);
-            if ($exprAnnotation instanceof Skip) {
-                $propertyMetadata->expr = $exprAnnotation->value;
+            $exprAnnotation = $property->getAttributes(Skip::class, \ReflectionAttribute::IS_INSTANCEOF);
+
+            if (count($exprAnnotation)) {
+                $propertyMetadata->expr = $exprAnnotation[0]->newInstance()->value;
             }
         }
 
-        foreach ($metadata->reflection->getMethods() as $method) {
-            if ($preMethodAnnotation = $this->reader->getMethodAnnotation($method, PreAnonymize::class)) {
-                if (!$method->isPublic()) {
-                    throw new LogicException(sprintf('You can\'t define a @PreAnonymize annotation on a non public method.'));
-                }
+        foreach ($reflectionClass->getMethods() as $method) {
+            $preMethodAnnotation = $method->getAttributes(PreAnonymize::class, \ReflectionAttribute::IS_INSTANCEOF);
+            $postMethodAnnotation = $method->getAttributes(PostAnonymize::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-                $metadata->preAnonymizeable[] = $method->getName();
+            if (count($preMethodAnnotation)) {
+                if ($method->isPublic()) {
+                    $metadata->preAnonymizeable[] = $method->getName();
+                } else {
+                    throw new LogicException(sprintf('You can\'t define a #[PreAnonymize] annotation on a non public method.'));
+                }
             }
-            if ($preMethodAnnotation = $this->reader->getMethodAnnotation($method, PostAnonymize::class)) {
-                if (!$method->isPublic()) {
-                    throw new LogicException(sprintf('You can\'t define a @PostAnonymize annotation on a non public method.'));
-                }
 
-                $metadata->postAnonymizeable[] = $method->getName();
+            if (count($postMethodAnnotation)) {
+                if ($method->isPublic()) {
+                    $metadata->postAnonymizeable[] = $method->getName();
+                } else {
+                    throw new LogicException(sprintf('You can\'t define a #[PostAnonymize] annotation on a non public method.'));
+                }
             }
         }
 
