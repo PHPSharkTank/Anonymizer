@@ -6,5 +6,5 @@ namespace PHPSharkTank\Anonymizer;
 
 interface AnonymizerInterface
 {
-    public function process($value): void;
+    public function process(object $value): void;
 }

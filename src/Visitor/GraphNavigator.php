@@ -16,30 +16,15 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface
 {
-    /**
-     * @var LoaderInterface
-     */
-    private $loader;
+    private LoaderInterface $loader;
 
-    /**
-     * @var HandlerRegistryInterface
-     */
-    private $registry;
+    private HandlerRegistryInterface $registry;
 
-    /**
-     * @var \SplStack
-     */
-    private $stack;
+    private \SplStack $stack;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
+    private EventDispatcherInterface $dispatcher;
 
-    /**
-     * @var StrategyInterface
-     */
-    private $exclusionStrategy;
+    private StrategyInterface $exclusionStrategy;
 
     public function __construct(
         LoaderInterface $loader,
@@ -55,7 +40,7 @@ final class GraphNavigator implements GraphNavigatorInterface
         $this->exclusionStrategy = $exclusionStrategy;
     }
 
-    public function visit($value): void
+    public function visit(mixed $value): void
     {
         if (is_iterable($value)) {
             $this->visitIterable($value);
@@ -64,7 +49,7 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
     }
 
-    private function visitObject($value): void
+    private function visitObject(object $value): void
     {
         try {
             $classMetadata = $this->loader->getMetadataFor(get_class($value));
@@ -109,14 +94,14 @@ final class GraphNavigator implements GraphNavigatorInterface
         $this->stack->pop();
     }
 
-    private function visitIterable($value): void
+    private function visitIterable(iterable $value): void
     {
         foreach ($value as $item) {
             $this->visit($item);
         }
     }
 
-    private function visitProperty($value, PropertyMetadata $metadata): void
+    private function visitProperty(mixed $value, PropertyMetadata $metadata): void
     {
         $newValue = $metadata->getValue($value);
 

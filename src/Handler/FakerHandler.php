@@ -8,15 +8,9 @@ use Faker\Generator;
 
 class FakerHandler implements HandlerInterface
 {
-    /**
-     * @var Generator
-     */
-    private $generator;
+    private Generator $generator;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     public function __construct(Generator $generator, string $name)
     {
@@ -29,7 +23,7 @@ class FakerHandler implements HandlerInterface
         return $this->name;
     }
 
-    public function process($object, array $options)
+    public function process(object $object, array $options): mixed
     {
         return $this->generator->format($this->name, $options);
     }
