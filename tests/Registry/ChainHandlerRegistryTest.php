@@ -9,9 +9,12 @@ use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 use PHPSharkTank\Anonymizer\Registry\ChainHandlerRegistry;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ChainHandlerRegistryTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testUnregister()
     {
         $this->expectException(\BadMethodCallException::class);

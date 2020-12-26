@@ -9,15 +9,15 @@ use PHPSharkTank\Anonymizer\Loader\CachingLoader;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 class CachingLoaderTest extends TestCase
 {
-    /**
-     * @var CachingLoader
-     */
-    private $loader;
+    use ProphecyTrait;
+
+    private CachingLoader $loader;
     /**
      * @var LoaderInterface|\Prophecy\Prophecy\ObjectProphecy
      */
@@ -34,7 +34,7 @@ class CachingLoaderTest extends TestCase
         $this->loader = new CachingLoader($this->delegate->reveal(), $this->pool->reveal());
     }
 
-    public function testGetMetadataForWithCache()
+    public function testGetMetadataForWithCache(): void
     {
         $metadata = new ClassMetadataInfo('stdClass');
 
@@ -50,7 +50,7 @@ class CachingLoaderTest extends TestCase
         self::assertSame($metadata, $this->loader->getMetadataFor('stdClass'));
     }
 
-    public function testGetMetadataForWithoutCache()
+    public function testGetMetadataForWithoutCache(): void
     {
         $metadata = new ClassMetadataInfo('stdClass');
 
@@ -67,7 +67,7 @@ class CachingLoaderTest extends TestCase
         self::assertSame($metadata, $this->loader->getMetadataFor('stdClass'));
     }
 
-    public function testGetMetadataException()
+    public function testGetMetadataException(): void
     {
         $this->expectException(RuntimeException::class);
 

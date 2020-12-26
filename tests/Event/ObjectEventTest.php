@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class ObjectEventTest extends TestCase
 {
-    public function testGetObject()
+    public function testGetObject(): void
     {
         $value = new \stdClass();
         $event = new ObjectEvent($value);
