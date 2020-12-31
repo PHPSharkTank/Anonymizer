@@ -127,7 +127,7 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
 
         $registry = $this->registry->get($metadata->getType());
-        $newValue = $registry->process($value, $metadata->getOptions());
+        $newValue = $registry->process($value, array_merge($metadata->getOptions(), ['currentValue' => $newValue]));
         $metadata->setValue($value, $newValue);
     }
 }
