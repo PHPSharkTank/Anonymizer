@@ -34,8 +34,8 @@ final class AnnotationLoader implements LoaderInterface
         /** @var EnableAnonymize|null $annotation */
         $annotation = $this->reader->getClassAnnotation($metadata->reflection, EnableAnonymize::class);
 
-        if (null === $annotation) {
-            throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $className));
+        if ($annotation) {
+            $metadata->enabled = true;
         }
 
         $exprAnnotation = $this->reader->getClassAnnotation($metadata->reflection, Skip::class);

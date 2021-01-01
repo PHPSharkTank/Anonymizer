@@ -36,6 +36,11 @@ class ClassMetadataInfo
      */
     public $expr = '';
 
+    /**
+     * @var bool
+     */
+    public $enabled = false;
+
     public function __construct(string $className)
     {
         $this->className = $className;

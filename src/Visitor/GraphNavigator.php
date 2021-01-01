@@ -68,6 +68,9 @@ final class GraphNavigator implements GraphNavigatorInterface
     {
         try {
             $classMetadata = $this->loader->getMetadataFor(get_class($value));
+            if (!$classMetadata->enabled) {
+                throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $classMetadata->className));
+            }
         } catch (MetadataNotFoundException $e) {
             return;
         }
