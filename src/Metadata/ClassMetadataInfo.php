@@ -59,6 +59,8 @@ class ClassMetadataInfo
             'className',
             'propertyMetadata',
             'expr',
+            'preAnonymizeable',
+            'postAnonymizeable',
         ];
     }
 
