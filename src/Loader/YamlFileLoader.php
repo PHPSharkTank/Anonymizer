@@ -10,15 +10,12 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlFileLoader implements LoaderInterface
 {
-    /**
-     * @var LoaderInterface
-     */
-    private $delegate;
+    private LoaderInterface $delegate;
 
     /**
      * @var string[]
      */
-    private $paths = [];
+    private array $paths = [];
 
     public function __construct(LoaderInterface $delegate)
     {

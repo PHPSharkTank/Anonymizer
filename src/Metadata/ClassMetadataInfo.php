@@ -29,10 +29,7 @@ class ClassMetadataInfo
 
     public string $expr = '';
 
-    /**
-     * @var bool
-     */
-    public $enabled = false;
+    public bool $enabled = false;
 
     public function __construct(string $className)
     {
