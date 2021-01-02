@@ -66,6 +66,7 @@ class ClassMetadataInfo
             'expr',
             'preAnonymizeable',
             'postAnonymizeable',
+            'enabled',
         ];
     }
 
