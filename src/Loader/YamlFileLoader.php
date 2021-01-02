@@ -54,13 +54,13 @@ class YamlFileLoader implements LoaderInterface
             $metadata->expr = $metadataConfig[$className]['skip'];
         }
 
-        foreach ($metadataConfig[$className]['properties'] ?: [] as $property => $settings) {
+        foreach ($metadataConfig[$className]['properties'] ?? [] as $property => $settings) {
             $propertyMetadata = new PropertyMetadata($className, $property, $settings['type']);
-            $propertyMetadata->setOptions($settings['options'] ?: []);
+            $propertyMetadata->setOptions($settings['options'] ?? []);
             $metadata->addPropertyMetadata($propertyMetadata);
         }
 
-        foreach ($metadataConfig[$className]['methods'] ?: [] as $method => $settings) {
+        foreach ($metadataConfig[$className]['methods'] ?? [] as $method => $settings) {
             if (array_key_exists('preAnonymize', $settings) && $settings['preAnonymize']) {
                 if (!in_array($method, $metadata->preAnonymizeable)) {
                     $metadata->preAnonymizeable[] = $method;
