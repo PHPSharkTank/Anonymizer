@@ -14,7 +14,7 @@ class ChainHandlerRegistry implements HandlerRegistryInterface
     /**
      * @var HandlerRegistryInterface[]
      */
-    private $registries;
+    private array $registries;
 
     public function __construct(iterable $registries)
     {

@@ -10,7 +10,7 @@ use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 
 final class DefaultExclusionStrategy implements StrategyInterface
 {
-    public function shouldSkipObject($object, ClassMetadataInfo $metadataInfo): bool
+    public function shouldSkipObject(object $object, ClassMetadataInfo $metadataInfo): bool
     {
         if (!$object instanceof AnonymizableInterface) {
             return false;
@@ -19,7 +19,7 @@ final class DefaultExclusionStrategy implements StrategyInterface
         return false === $object->isAnonymizable();
     }
 
-    public function shouldSkipProperty($object, PropertyMetadata $metadata): bool
+    public function shouldSkipProperty(object $object, PropertyMetadata $metadata): bool
     {
         return false;
     }

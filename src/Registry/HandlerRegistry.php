@@ -10,8 +10,7 @@ use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 
 final class HandlerRegistry implements HandlerRegistryInterface
 {
-    /** @var array<string, HandlerInterface> */
-    private $handlers = [];
+    private array $handlers = [];
 
     public function __construct(iterable $handlers)
     {

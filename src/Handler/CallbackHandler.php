@@ -11,7 +11,7 @@ class CallbackHandler implements HandlerInterface
         return 'callback';
     }
 
-    public function process($object, array $options)
+    public function process(object $object, array $options): mixed
     {
         if (isset($options['method'])) {
             $callable = [$object, $options['method']];

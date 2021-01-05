@@ -18,7 +18,7 @@ final class Anonymizer implements AnonymizerInterface
         $this->graphNavigator = $graphNavigator;
     }
 
-    public function process($value): void
+    public function process(object $value): void
     {
         $this->graphNavigator->visit($value);
     }

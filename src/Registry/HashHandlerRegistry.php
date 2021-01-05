@@ -14,7 +14,7 @@ class HashHandlerRegistry implements HandlerRegistryInterface
     {
         $hashHandler = new HashHandler($name);
 
-        if (in_array($name, hash_hmac_algos())) {
+        if (in_array(needle: $name, haystack: hash_hmac_algos())) {
             return $hashHandler;
         }
 
