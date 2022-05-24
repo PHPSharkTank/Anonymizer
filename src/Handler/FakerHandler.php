@@ -25,6 +25,7 @@ class FakerHandler implements HandlerInterface
 
     public function process(object $object, array $options): mixed
     {
+        unset($options['currentValue']);
         return $this->generator->format($this->name, $options);
     }
 }
