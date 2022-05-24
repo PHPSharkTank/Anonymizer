@@ -38,13 +38,13 @@ class YamlFileLoader implements LoaderInterface
                 $metadataConfig = array_merge_recursive($metadataConfig, $fileContent);
             }
         }
-        if(!array_key_exists($className, $metadataConfig)) {
+        if (!array_key_exists($className, $metadataConfig)) {
             return $metadata;
         }
 
         $metadata->enabled = true;
         if (array_key_exists('enabled', $metadataConfig[$className])) {
-            $metadata->enabled = (bool)$metadataConfig[$className]['enabled'];
+            $metadata->enabled = (bool) $metadataConfig[$className]['enabled'];
         }
 
         if (array_key_exists('skip', $metadataConfig[$className])) {
@@ -62,16 +62,16 @@ class YamlFileLoader implements LoaderInterface
                 if (!in_array($method, $metadata->preAnonymizeable)) {
                     $metadata->preAnonymizeable[] = $method;
                 }
-            } else if (array_key_exists('preAnonymize', $settings) && !$settings['preAnonymize']) {
-                unset($metadata->preAnonymizeable[array_search($method, $metadata->preAnonymizeable, true)] );
+            } elseif (array_key_exists('preAnonymize', $settings) && !$settings['preAnonymize']) {
+                unset($metadata->preAnonymizeable[array_search($method, $metadata->preAnonymizeable, true)]);
             }
 
             if (array_key_exists('postAnonymize', $settings) && $settings['postAnonymize']) {
                 if (!in_array($method, $metadata->postAnonymizeable)) {
                     $metadata->postAnonymizeable[] = $method;
                 }
-            } else if (array_key_exists('postAnonymize', $settings) && !$settings['postAnonymize']) {
-                unset($metadata->postAnonymizeable[array_search($method, $metadata->postAnonymizeable, true)] );
+            } elseif (array_key_exists('postAnonymize', $settings) && !$settings['postAnonymize']) {
+                unset($metadata->postAnonymizeable[array_search($method, $metadata->postAnonymizeable, true)]);
             }
         }
 

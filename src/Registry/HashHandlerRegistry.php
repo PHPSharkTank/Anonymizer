@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace PHPSharkTank\Anonymizer\Registry;
 
 use PHPSharkTank\Anonymizer\Exception\RuntimeException;
-use PHPSharkTank\Anonymizer\Handler\HashHandler;
 use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
+use PHPSharkTank\Anonymizer\Handler\HashHandler;
 
 class HashHandlerRegistry implements HandlerRegistryInterface
 {

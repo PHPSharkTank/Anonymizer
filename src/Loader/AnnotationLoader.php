@@ -10,7 +10,6 @@ use PHPSharkTank\Anonymizer\Annotation\PreAnonymize;
 use PHPSharkTank\Anonymizer\Annotation\Skip;
 use PHPSharkTank\Anonymizer\Annotation\Type;
 use PHPSharkTank\Anonymizer\Exception\LogicException;
-use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 
