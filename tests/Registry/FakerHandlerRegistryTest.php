@@ -11,17 +11,16 @@ use PHPSharkTank\Anonymizer\Handler\FakerHandler;
 use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 use PHPSharkTank\Anonymizer\Registry\FakerHandlerRegistry;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class FakerHandlerRegistryTest extends TestCase
 {
-    /**
-     * @var Generator|\Prophecy\Prophecy\ObjectProphecy
-     */
-    private $generator;
-    /**
-     * @var FakerHandlerRegistry
-     */
-    private $registry;
+    use ProphecyTrait;
+
+    private Generator|ObjectProphecy $generator;
+
+    private FakerHandlerRegistry $registry;
 
     protected function setUp(): void
     {
@@ -29,21 +28,21 @@ class FakerHandlerRegistryTest extends TestCase
         $this->registry = new FakerHandlerRegistry($this->generator->reveal());
     }
 
-    public function testRegister()
+    public function testRegister(): void
     {
         $this->expectException(\BadMethodCallException::class);
 
         $this->registry->register($this->prophesize(HandlerInterface::class)->reveal());
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $this->generator->getProviders()->willReturn([new Lorem($this->generator->reveal())]);
 
         self::assertInstanceOf(FakerHandler::class, $this->registry->get('text'));
     }
 
-    public function testGetInvalid()
+    public function testGetInvalid(): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -52,7 +51,7 @@ class FakerHandlerRegistryTest extends TestCase
         self::assertInstanceOf(FakerHandler::class, $this->registry->get('invalid'));
     }
 
-    public function testUnregister()
+    public function testUnregister(): void
     {
         $this->expectException(\BadMethodCallException::class);
 

@@ -4,28 +4,29 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Tests\Handler;
 
-use PHPSharkTank\Anonymizer\Annotation as Anonymize;
+use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
+use PHPSharkTank\Anonymizer\Annotation\Handler;
 use PHPSharkTank\Anonymizer\Handler\CallbackHandler;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class CallbackHandlerTest extends TestCase
 {
-    /**
-     * @var CallbackHandler
-     */
-    private $handler;
+    use ProphecyTrait;
+
+    private CallbackHandler $handler;
 
     protected function setUp(): void
     {
         $this->handler = new CallbackHandler();
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         self::assertSame('callback', $this->handler->getName());
     }
 
-    public function testProcessWithMethod()
+    public function testProcessWithMethod(): void
     {
         $user = $this->prophesize(User::class);
         $user->removeName()->shouldBeCalled();
@@ -35,7 +36,7 @@ class CallbackHandlerTest extends TestCase
         ]);
     }
 
-    public function testProcessWitHCallback()
+    public function testProcessWitHCallback(): void
     {
         $value = new \stdClass();
         $callback = function () {
@@ -48,16 +49,11 @@ class CallbackHandlerTest extends TestCase
     }
 }
 
-/**
- * @Anonymize\EnableAnonymize
- */
+#[EnableAnonymize]
 class User
 {
-    /**
-     * @var string|null
-     * @Anonymize\AnonymizeValue(type="callback", options={"method":"removeName"})
-     */
-    private $name = 'Name';
+    #[Handler('callback', options: ['method' => 'removeName'])]
+    private ?string $name = 'Name';
 
     public function removeName(): void
     {
