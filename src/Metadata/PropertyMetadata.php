@@ -15,7 +15,7 @@ class PropertyMetadata
 
     private string $className;
 
-    private string $type;
+    private string $handler;
 
     /**
      * @var array<string, mixed>
@@ -24,11 +24,11 @@ class PropertyMetadata
 
     public string $expr = '';
 
-    public function __construct(string $class, string $propertyName, string $type = 'text')
+    public function __construct(string $class, string $propertyName, string $handler = 'text')
     {
         $this->className = $class;
         $this->name = $propertyName;
-        $this->type = $type;
+        $this->handler = $handler;
 
         $this->reflection = new \ReflectionProperty($this->className, $propertyName);
         $this->reflection->setAccessible(true);
@@ -49,9 +49,9 @@ class PropertyMetadata
         return $this->name;
     }
 
-    public function getType(): string
+    public function getHandler(): string
     {
-        return $this->type;
+        return $this->handler;
     }
 
     public function setOptions(array $options): void

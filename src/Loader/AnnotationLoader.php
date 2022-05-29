@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace PHPSharkTank\Anonymizer\Loader;
 
 use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
+use PHPSharkTank\Anonymizer\Annotation\Handler;
 use PHPSharkTank\Anonymizer\Annotation\PostAnonymize;
 use PHPSharkTank\Anonymizer\Annotation\PreAnonymize;
 use PHPSharkTank\Anonymizer\Annotation\Skip;
-use PHPSharkTank\Anonymizer\Annotation\Type;
 use PHPSharkTank\Anonymizer\Exception\LogicException;
+use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 
@@ -22,8 +23,8 @@ final class AnnotationLoader implements LoaderInterface
 
         $annotation = $reflectionClass->getAttributes(EnableAnonymize::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-        if (0 < count($annotation)) {
-            $metadata->enabled = true;
+        if (0 === count($annotation)) {
+            throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $className));
         }
 
         $exprAnnotation = $reflectionClass->getAttributes(Skip::class, \ReflectionAttribute::IS_INSTANCEOF);
@@ -35,16 +36,16 @@ final class AnnotationLoader implements LoaderInterface
         }
 
         foreach ($reflectionClass->getProperties() as $property) {
-            $propertyAnnotation = $property->getAttributes(Type::class, \ReflectionAttribute::IS_INSTANCEOF);
+            $propertyAnnotation = $property->getAttributes(Handler::class, \ReflectionAttribute::IS_INSTANCEOF);
 
             if (0 === count($propertyAnnotation)) {
                 continue;
             }
 
-            /** @var Type $type */
-            $type = $propertyAnnotation[0]->newInstance();
-            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $type->value);
-            $propertyMetadata->setOptions($type->options);
+            /** @var Handler $handler */
+            $handler = $propertyAnnotation[0]->newInstance();
+            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $handler->value);
+            $propertyMetadata->setOptions($handler->options);
             $metadata->addPropertyMetadata($propertyMetadata);
 
             $exprAnnotation = $property->getAttributes(Skip::class, \ReflectionAttribute::IS_INSTANCEOF);

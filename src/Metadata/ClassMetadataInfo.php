@@ -32,8 +32,6 @@ class ClassMetadataInfo
 
     public string $expr = '';
 
-    public bool $enabled = false;
-
     public function __construct(string $className)
     {
         if (!class_exists($className)) {
@@ -55,6 +53,19 @@ class ClassMetadataInfo
         return $this->propertyMetadata;
     }
 
+    public function merge(ClassMetadataInfo $metadataInfo): void
+    {
+        foreach ($metadataInfo->propertyMetadata as $name => $metadata) {
+            $this->propertyMetadata[$name] = $metadata;
+        }
+        $this->preAnonymizeable = array_merge($this->preAnonymizeable, $metadataInfo->preAnonymizeable);
+        $this->postAnonymizeable = array_merge($this->postAnonymizeable, $metadataInfo->postAnonymizeable);
+
+        if ('' !== $metadataInfo->expr) {
+            $this->expr = $metadataInfo->expr;
+        }
+    }
+
     public function __sleep(): array
     {
         return [
@@ -63,7 +74,6 @@ class ClassMetadataInfo
             'expr',
             'preAnonymizeable',
             'postAnonymizeable',
-            'enabled',
         ];
     }
 
