@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPSharkTank\Anonymizer\Tests\Annotation;
 
 use PHPSharkTank\Anonymizer\Annotation\Skip;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPSharkTank\Anonymizer\Tests\Registry;
 
 use PHPSharkTank\Anonymizer\Exception\RuntimeException;

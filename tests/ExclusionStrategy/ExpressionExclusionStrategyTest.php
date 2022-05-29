@@ -9,7 +9,6 @@ use PHPSharkTank\Anonymizer\Annotation\Handler;
 use PHPSharkTank\Anonymizer\Annotation\Skip;
 use PHPSharkTank\Anonymizer\ExclusionStrategy\ExpressionExclusionStrategy;
 use PHPSharkTank\Anonymizer\Loader\AnnotationLoader;
-use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;

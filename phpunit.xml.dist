@@ -4,6 +4,7 @@
          backupGlobals="false"
          colors="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
 >
     <coverage processUncoveredFiles="true">
         <include>

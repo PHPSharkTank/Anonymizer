@@ -39,7 +39,7 @@ class CallbackHandlerTest extends TestCase
     public function testProcessWitHCallback(): void
     {
         $value = new \stdClass();
-        $callback = function () {
+        $callback = static function () {
             self::assertTrue(true);
         };
 

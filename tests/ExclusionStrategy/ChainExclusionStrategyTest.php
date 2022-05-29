@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPSharkTank\Anonymizer\Tests\ExclusionStrategy;
 
 use PHPSharkTank\Anonymizer\ExclusionStrategy\ChainExclusionStrategy;
@@ -21,7 +23,7 @@ class ChainExclusionStrategyTest extends TestCase
 
     public function testShouldSkipObjectFalseWithStrategy(): void
     {
-        $class= new TestObject();
+        $class = new TestObject();
         $meta = new ClassMetadataInfo(get_class($class));
 
         $strategy = $this->prophesize(StrategyInterface::class);
@@ -33,7 +35,7 @@ class ChainExclusionStrategyTest extends TestCase
 
     public function testShouldSkipObjectTrue(): void
     {
-        $class= new TestObject();
+        $class = new TestObject();
         $meta = new ClassMetadataInfo(get_class($class));
 
         $strategy1 = $this->prophesize(StrategyInterface::class);
@@ -48,7 +50,7 @@ class ChainExclusionStrategyTest extends TestCase
 
     public function testShouldSkipPropertyFalseWithStrategy(): void
     {
-        $class= new TestObject();
+        $class = new TestObject();
         $meta = new PropertyMetadata(get_class($class), 'value');
 
         $strategy = $this->prophesize(StrategyInterface::class);
@@ -60,7 +62,7 @@ class ChainExclusionStrategyTest extends TestCase
 
     public function testShouldSkipPropertyTrue(): void
     {
-        $class= new TestObject();
+        $class = new TestObject();
         $meta = new PropertyMetadata(get_class($class), 'value');
 
         $strategy1 = $this->prophesize(StrategyInterface::class);
@@ -74,6 +76,7 @@ class ChainExclusionStrategyTest extends TestCase
     }
 }
 
-class TestObject {
+class TestObject
+{
     public string $value = '';
 }
