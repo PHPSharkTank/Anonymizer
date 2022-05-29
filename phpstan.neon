@@ -3,3 +3,4 @@ parameters:
     paths:
         - %currentWorkingDirectory%/src
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
