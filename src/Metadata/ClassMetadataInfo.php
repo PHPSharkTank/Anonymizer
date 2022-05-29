@@ -8,6 +8,9 @@ use PHPSharkTank\Anonymizer\Exception\LogicException;
 
 class ClassMetadataInfo
 {
+    /**
+     * @var class-string
+     */
     public string $className;
 
     /**

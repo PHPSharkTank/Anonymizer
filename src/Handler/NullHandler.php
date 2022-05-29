@@ -11,7 +11,7 @@ class NullHandler implements HandlerInterface
         return 'null';
     }
 
-    public function process(object $object, array $options): mixed
+    public function process(mixed $value, array $options): mixed
     {
         return null;
     }

@@ -11,10 +11,10 @@ class CallbackHandler implements HandlerInterface
         return 'callback';
     }
 
-    public function process(object $object, array $options): mixed
+    public function process(mixed $value, array $options): mixed
     {
         if (isset($options['method'])) {
-            $callable = [$object, $options['method']];
+            $callable = [$value, $options['method']];
             if (is_callable($callable)) {
                 return $callable();
             }

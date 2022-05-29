@@ -14,10 +14,5 @@ namespace PHPSharkTank\Anonymizer\Visitor;
  */
 interface GraphNavigatorInterface
 {
-    /**
-     * Starts visit the value.
-     *
-     * @param mixed $value
-     */
-    public function visit($value): void;
+    public function visit(mixed $value): void;
 }

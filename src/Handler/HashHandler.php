@@ -18,7 +18,7 @@ class HashHandler implements HandlerInterface
         return $this->name;
     }
 
-    public function process(object $object, array $options): string
+    public function process(mixed $value, array $options): string
     {
         return hash($this->name, $options['currentValue']);
     }

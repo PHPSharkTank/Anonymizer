@@ -12,7 +12,7 @@ final class ChainExclusionStrategy implements StrategyInterface
     /**
      * @var StrategyInterface[]
      */
-    private array $strategies;
+    private array $strategies = [];
 
     public function __construct(iterable $strategies)
     {

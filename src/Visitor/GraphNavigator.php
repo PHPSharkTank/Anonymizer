@@ -49,49 +49,46 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
     }
 
-    private function visitObject(object $value): void
+    private function visitObject(object $object): void
     {
         try {
-            $classMetadata = $this->loader->getMetadataFor(get_class($value));
-            if (!$classMetadata->enabled) {
-                throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $classMetadata->className));
-            }
-        } catch (MetadataNotFoundException $e) {
+            $classMetadata = $this->loader->getMetadataFor(get_class($object));
+        } catch (MetadataNotFoundException) {
             return;
         }
 
-        $event = new PreAnonymizeEvent($value);
+        $event = new PreAnonymizeEvent($object);
 
         foreach ($classMetadata->preAnonymizeable as $methodName) {
-            $value->{$methodName}($event);
+            $object->{$methodName}($event);
         }
 
         $this->dispatcher->dispatch($event);
 
-        if ($event->isTerminated() || $this->exclusionStrategy->shouldSkipObject($value, $classMetadata)) {
+        if ($event->isTerminated() || $this->exclusionStrategy->shouldSkipObject($object, $classMetadata)) {
             return;
         }
 
-        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($value));
+        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($object));
 
         $this->stack->push($classMetadata);
 
         foreach ($classMetadata->getPropertyMetadata() as $metadata) {
-            if ($this->exclusionStrategy->shouldSkipProperty($value, $metadata)) {
+            if ($this->exclusionStrategy->shouldSkipProperty($object, $metadata)) {
                 continue;
             }
 
-            $this->visitProperty($value, $metadata);
+            $this->visitProperty($object, $metadata);
         }
 
         foreach ($classMetadata->postAnonymizeable as $methodName) {
-            $value->{$methodName}($event);
+            $object->{$methodName}($event);
         }
 
-        $this->dispatcher->dispatch(new PostAnonymizeEvent($value));
+        $this->dispatcher->dispatch(new PostAnonymizeEvent($object));
 
-        if ($value instanceof HasBeenAnonymizedInterface) {
-            $value->beenAnonymized();
+        if ($object instanceof HasBeenAnonymizedInterface) {
+            $object->beenAnonymized();
         }
 
         $this->stack->pop();
@@ -104,18 +101,18 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
     }
 
-    private function visitProperty(mixed $value, PropertyMetadata $metadata): void
+    private function visitProperty(object $object, PropertyMetadata $metadata): void
     {
-        $newValue = $metadata->getValue($value);
+        $currentValue = $metadata->getValue($object);
 
-        if (is_iterable($newValue) || is_object($newValue)) {
-            $this->visit($newValue);
+        if (is_iterable($currentValue) || is_object($currentValue)) {
+            $this->visit($currentValue);
 
             return;
         }
 
-        $registry = $this->registry->get($metadata->getType());
-        $newValue = $registry->process($value, array_merge($metadata->getOptions(), ['currentValue' => $newValue]));
-        $metadata->setValue($value, $newValue);
+        $handler = $this->registry->get($metadata->getHandler());
+        $newValue = $handler->process($object, array_merge($metadata->getOptions(), ['currentValue' => $currentValue]));
+        $metadata->setValue($object, $newValue);
     }
 }

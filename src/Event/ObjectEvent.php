@@ -8,14 +8,11 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 class ObjectEvent implements StoppableEventInterface
 {
-    private object $object;
-
     private bool $propagationStopped = false;
 
-    public function __construct(object $object)
-    {
-        $this->object = $object;
-    }
+    public function __construct(
+        private readonly object $object,
+    ) {}
 
     public function getObject(): object
     {
