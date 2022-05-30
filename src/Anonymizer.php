@@ -8,17 +8,11 @@ use PHPSharkTank\Anonymizer\Visitor\GraphNavigatorInterface;
 
 final class Anonymizer implements AnonymizerInterface
 {
-    /**
-     * @var GraphNavigatorInterface
-     */
-    private $graphNavigator;
+    public function __construct(
+        private readonly GraphNavigatorInterface $graphNavigator,
+    ) {}
 
-    public function __construct(GraphNavigatorInterface $graphNavigator)
-    {
-        $this->graphNavigator = $graphNavigator;
-    }
-
-    public function process($value): void
+    public function process(object $value): void
     {
         $this->graphNavigator->visit($value);
     }

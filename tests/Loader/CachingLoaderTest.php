@@ -9,23 +9,20 @@ use PHPSharkTank\Anonymizer\Loader\CachingLoader;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 class CachingLoaderTest extends TestCase
 {
-    /**
-     * @var CachingLoader
-     */
-    private $loader;
-    /**
-     * @var LoaderInterface|\Prophecy\Prophecy\ObjectProphecy
-     */
-    private $delegate;
-    /**
-     * @var \Prophecy\Prophecy\ObjectProphecy|CacheItemPoolInterface
-     */
-    private $pool;
+    use ProphecyTrait;
+
+    private CachingLoader $loader;
+
+    private LoaderInterface|ObjectProphecy $delegate;
+
+    private CacheItemPoolInterface|ObjectProphecy $pool;
 
     protected function setUp(): void
     {
@@ -34,7 +31,7 @@ class CachingLoaderTest extends TestCase
         $this->loader = new CachingLoader($this->delegate->reveal(), $this->pool->reveal());
     }
 
-    public function testGetMetadataForWithCache()
+    public function testGetMetadataForWithCache(): void
     {
         $metadata = new ClassMetadataInfo('stdClass');
 
@@ -50,7 +47,7 @@ class CachingLoaderTest extends TestCase
         self::assertSame($metadata, $this->loader->getMetadataFor('stdClass'));
     }
 
-    public function testGetMetadataForWithoutCache()
+    public function testGetMetadataForWithoutCache(): void
     {
         $metadata = new ClassMetadataInfo('stdClass');
 
@@ -67,7 +64,7 @@ class CachingLoaderTest extends TestCase
         self::assertSame($metadata, $this->loader->getMetadataFor('stdClass'));
     }
 
-    public function testGetMetadataException()
+    public function testGetMetadataException(): void
     {
         $this->expectException(RuntimeException::class);
 

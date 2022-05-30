@@ -10,17 +10,14 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 final class ExpressionExclusionStrategy implements StrategyInterface
 {
-    /**
-     * @var ExpressionLanguage
-     */
-    private $expression;
+    private ExpressionLanguage $expression;
 
     public function __construct(ExpressionLanguage $expression)
     {
         $this->expression = $expression;
     }
 
-    public function shouldSkipObject($object, ClassMetadataInfo $metadataInfo): bool
+    public function shouldSkipObject(object $object, ClassMetadataInfo $metadataInfo): bool
     {
         if (0 === strlen($metadataInfo->expr)) {
             return false;
@@ -29,7 +26,7 @@ final class ExpressionExclusionStrategy implements StrategyInterface
         return (bool) $this->expression->evaluate($metadataInfo->expr, ['obj' => $object]);
     }
 
-    public function shouldSkipProperty($object, PropertyMetadata $metadata): bool
+    public function shouldSkipProperty(object $object, PropertyMetadata $metadata): bool
     {
         if (0 === strlen($metadata->expr)) {
             return false;

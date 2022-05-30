@@ -9,52 +9,37 @@ namespace PHPSharkTank\Anonymizer\Metadata;
  */
 class PropertyMetadata
 {
-    /**
-     * @var \ReflectionProperty
-     */
-    private $reflection;
+    private \ReflectionProperty $reflection;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var string
-     */
-    private $className;
+    private string $className;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private string $handler;
 
     /**
      * @var array<string, mixed>
      */
-    private $options = [];
+    private array $options = [];
 
-    /**
-     * @var string
-     */
-    public $expr = '';
+    public string $expr = '';
 
-    public function __construct(string $class, string $propertyName, string $type = 'text')
+    public function __construct(string $class, string $propertyName, string $handler = 'text')
     {
         $this->className = $class;
         $this->name = $propertyName;
-        $this->type = $type;
+        $this->handler = $handler;
 
         $this->reflection = new \ReflectionProperty($this->className, $propertyName);
         $this->reflection->setAccessible(true);
     }
 
-    public function setValue($object, $value): void
+    public function setValue(object $object, mixed $value): void
     {
         $this->reflection->setValue($object, $value);
     }
 
-    public function getValue($object)
+    public function getValue(object $object): mixed
     {
         return $this->reflection->getValue($object);
     }
@@ -64,9 +49,9 @@ class PropertyMetadata
         return $this->name;
     }
 
-    public function getType(): string
+    public function getHandler(): string
     {
-        return $this->type;
+        return $this->handler;
     }
 
     public function setOptions(array $options): void
@@ -79,7 +64,7 @@ class PropertyMetadata
         return $this->options;
     }
 
-    public function __sleep()
+    public function __sleep(): array
     {
         return [
             'name',
@@ -90,7 +75,7 @@ class PropertyMetadata
         ];
     }
 
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->reflection = new \ReflectionProperty($this->className, $this->name);
         $this->reflection->setAccessible(true);

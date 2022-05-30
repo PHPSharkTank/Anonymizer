@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace PHPSharkTank\Anonymizer\Registry;
 
 use PHPSharkTank\Anonymizer\Exception\RuntimeException;
-use PHPSharkTank\Anonymizer\Handler\HashHandler;
 use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
+use PHPSharkTank\Anonymizer\Handler\HashHandler;
 
 class HashHandlerRegistry implements HandlerRegistryInterface
 {
@@ -14,7 +14,7 @@ class HashHandlerRegistry implements HandlerRegistryInterface
     {
         $hashHandler = new HashHandler($name);
 
-        if (in_array($name, hash_hmac_algos())) {
+        if (in_array(needle: $name, haystack: hash_hmac_algos())) {
             return $hashHandler;
         }
 

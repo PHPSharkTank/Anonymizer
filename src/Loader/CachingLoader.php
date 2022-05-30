@@ -4,20 +4,14 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Loader;
 
-use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use Psr\Cache\CacheItemPoolInterface;
 
 final class CachingLoader implements LoaderInterface
 {
-    /**
-     * @var LoaderInterface
-     */
-    private $delegate;
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $pool;
+    private LoaderInterface $delegate;
+
+    private CacheItemPoolInterface $pool;
 
     public function __construct(LoaderInterface $delegate, CacheItemPoolInterface $pool)
     {
@@ -32,14 +26,10 @@ final class CachingLoader implements LoaderInterface
             return $item->get();
         }
 
-        try {
-            $metadata = $this->delegate->getMetadataFor($className);
-            $item->set($metadata);
-            $this->pool->save($item);
+        $metadata = $this->delegate->getMetadataFor($className);
+        $item->set($metadata);
+        $this->pool->save($item);
 
-            return $metadata;
-        } catch (MetadataNotFoundException $e) {
-            throw $e;
-        }
+        return $metadata;
     }
 }

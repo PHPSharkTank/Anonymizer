@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Tests\Registry;
 
+use PHPSharkTank\Anonymizer\Exception\HandlerNotFoundException;
 use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 use PHPSharkTank\Anonymizer\Registry\ChainHandlerRegistry;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ChainHandlerRegistryTest extends TestCase
 {
-    public function testUnregister()
+    use ProphecyTrait;
+
+    public function testUnregister(): void
     {
         $this->expectException(\BadMethodCallException::class);
 
@@ -20,7 +24,7 @@ class ChainHandlerRegistryTest extends TestCase
         $handler->unregister('Test');
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $name = 'foo';
         $handler = $this->prophesize(HandlerInterface::class);
@@ -39,11 +43,19 @@ class ChainHandlerRegistryTest extends TestCase
         self::assertSame($handler->reveal(), $registry->get($name));
     }
 
-    public function testRegister()
+    public function testRegister(): void
     {
         $this->expectException(\BadMethodCallException::class);
 
         $handler = new ChainHandlerRegistry([]);
         $handler->register($this->prophesize(HandlerInterface::class)->reveal());
+    }
+
+    public function testHandlerNotFound(): void
+    {
+        self::expectException(HandlerNotFoundException::class);
+
+        $registry = new ChainHandlerRegistry([]);
+        $registry->get('newHanlder');
     }
 }

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Annotation;
 
-use Doctrine\Common\Annotations\Annotation;
-
-/**
- * @Annotation()
- * @Annotation\Target({"CLASS", "PROPERTY"})
- */
-class Skip extends Annotation
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_PROPERTY)]
+class Skip
 {
+    public function __construct(
+        public string $value,
+    ) {}
 }

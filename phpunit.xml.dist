@@ -4,16 +4,17 @@
          backupGlobals="false"
          colors="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
 >
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+
     <testsuites>
         <testsuite name="Anonymizer Component test suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory>./Tests</directory>
-        </whitelist>
-    </filter>
 </phpunit>

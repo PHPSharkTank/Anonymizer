@@ -10,17 +10,9 @@ env:
 matrix:
     fast_finish: true
     include:
-        - php: 7.2
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
-        - php: 7.2
-        - php: 7.3
-        - php: 7.4
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text --coverage-clover=build/coverage.xml"
-        - php: 7.4
-        - php: 7.4
-          env: STABILITY="dev"
-    allow_failures:
-        - env: STABILITY="dev"
+        - php: 8.0
+          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text --coverage-clover=build/coverage.xml" COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+
 
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi

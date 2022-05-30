@@ -7,27 +7,28 @@ namespace PHPSharkTank\Anonymizer\Tests\Handler;
 use Faker\Generator;
 use PHPSharkTank\Anonymizer\Handler\FakerHandler;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class FakerHandlerTest extends TestCase
 {
-    /**
-     * @var Generator|\Prophecy\Prophecy\ObjectProphecy
-     */
-    private $generator;
+    use ProphecyTrait;
+
+    private Generator|ObjectProphecy $generator;
 
     protected function setUp(): void
     {
         $this->generator = $this->prophesize(Generator::class);
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $handler = new FakerHandler($this->generator->reveal(), 'foo');
 
         self::assertSame('foo', $handler->getName());
     }
 
-    public function testProcess()
+    public function testProcess(): void
     {
         $handler = new FakerHandler($this->generator->reveal(), 'foo');
         $this->generator->format('foo', [])->willReturn('bar');

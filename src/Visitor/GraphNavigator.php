@@ -16,30 +16,15 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface
 {
-    /**
-     * @var LoaderInterface
-     */
-    private $loader;
+    private LoaderInterface $loader;
 
-    /**
-     * @var HandlerRegistryInterface
-     */
-    private $registry;
+    private HandlerRegistryInterface $registry;
 
-    /**
-     * @var \SplStack
-     */
-    private $stack;
+    private \SplStack $stack;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
+    private EventDispatcherInterface $dispatcher;
 
-    /**
-     * @var StrategyInterface
-     */
-    private $exclusionStrategy;
+    private StrategyInterface $exclusionStrategy;
 
     public function __construct(
         LoaderInterface $loader,
@@ -55,7 +40,7 @@ final class GraphNavigator implements GraphNavigatorInterface
         $this->exclusionStrategy = $exclusionStrategy;
     }
 
-    public function visit($value): void
+    public function visit(mixed $value): void
     {
         if (is_iterable($value)) {
             $this->visitIterable($value);
@@ -64,70 +49,70 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
     }
 
-    private function visitObject($value): void
+    private function visitObject(object $object): void
     {
         try {
-            $classMetadata = $this->loader->getMetadataFor(get_class($value));
-        } catch (MetadataNotFoundException $e) {
+            $classMetadata = $this->loader->getMetadataFor(get_class($object));
+        } catch (MetadataNotFoundException) {
             return;
         }
 
-        $event = new PreAnonymizeEvent($value);
+        $event = new PreAnonymizeEvent($object);
 
         foreach ($classMetadata->preAnonymizeable as $methodName) {
-            $value->{$methodName}($event);
+            $object->{$methodName}($event);
         }
 
         $this->dispatcher->dispatch($event);
 
-        if ($event->isTerminated() || $this->exclusionStrategy->shouldSkipObject($value, $classMetadata)) {
+        if ($event->isTerminated() || $this->exclusionStrategy->shouldSkipObject($object, $classMetadata)) {
             return;
         }
 
-        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($value));
+        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($object));
 
         $this->stack->push($classMetadata);
 
         foreach ($classMetadata->getPropertyMetadata() as $metadata) {
-            if ($this->exclusionStrategy->shouldSkipProperty($value, $metadata)) {
+            if ($this->exclusionStrategy->shouldSkipProperty($object, $metadata)) {
                 continue;
             }
 
-            $this->visitProperty($value, $metadata);
+            $this->visitProperty($object, $metadata);
         }
 
         foreach ($classMetadata->postAnonymizeable as $methodName) {
-            $value->{$methodName}($event);
+            $object->{$methodName}($event);
         }
 
-        $this->dispatcher->dispatch(new PostAnonymizeEvent($value));
+        $this->dispatcher->dispatch(new PostAnonymizeEvent($object));
 
-        if ($value instanceof HasBeenAnonymizedInterface) {
-            $value->beenAnonymized();
+        if ($object instanceof HasBeenAnonymizedInterface) {
+            $object->beenAnonymized();
         }
 
         $this->stack->pop();
     }
 
-    private function visitIterable($value): void
+    private function visitIterable(iterable $value): void
     {
         foreach ($value as $item) {
             $this->visit($item);
         }
     }
 
-    private function visitProperty($value, PropertyMetadata $metadata): void
+    private function visitProperty(object $object, PropertyMetadata $metadata): void
     {
-        $newValue = $metadata->getValue($value);
+        $currentValue = $metadata->getValue($object);
 
-        if (is_iterable($newValue) || is_object($newValue)) {
-            $this->visit($newValue);
+        if (is_iterable($currentValue) || is_object($currentValue)) {
+            $this->visit($currentValue);
 
             return;
         }
 
-        $registry = $this->registry->get($metadata->getType());
-        $newValue = $registry->process($value, array_merge($metadata->getOptions(), ['currentValue' => $newValue]));
-        $metadata->setValue($value, $newValue);
+        $handler = $this->registry->get($metadata->getHandler());
+        $newValue = $handler->process($object, array_merge($metadata->getOptions(), ['currentValue' => $currentValue]));
+        $metadata->setValue($object, $newValue);
     }
 }

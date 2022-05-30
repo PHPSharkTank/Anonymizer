@@ -1,5 +1,10 @@
-.php_cs.cache
 composer.lock
-phpunit.xml
+
 vendor/
+
+phpunit.xml
 .phpunit.result.cache
+
+.php_cs.cache
+
+.php-cs-fixer.cache

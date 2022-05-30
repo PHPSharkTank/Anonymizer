@@ -6,7 +6,7 @@ namespace PHPSharkTank\Anonymizer\Event;
 
 class PreAnonymizeEvent extends ObjectEvent
 {
-    private $terminate = false;
+    private bool $terminate = false;
 
     public function isTerminated(): bool
     {

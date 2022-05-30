@@ -9,7 +9,7 @@ use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 
 interface StrategyInterface
 {
-    public function shouldSkipObject($object, ClassMetadataInfo $metadataInfo): bool;
+    public function shouldSkipObject(object $object, ClassMetadataInfo $metadataInfo): bool;
 
-    public function shouldSkipProperty($object, PropertyMetadata $metadata): bool;
+    public function shouldSkipProperty(object $object, PropertyMetadata $metadata): bool;
 }

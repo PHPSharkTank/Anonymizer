@@ -6,7 +6,7 @@ namespace PHPSharkTank\Anonymizer\Handler;
 
 class HashHandler implements HandlerInterface
 {
-    private $name;
+    private string $name;
 
     public function __construct(string $name)
     {
@@ -18,7 +18,7 @@ class HashHandler implements HandlerInterface
         return $this->name;
     }
 
-    public function process($object, array $options): string
+    public function process(mixed $value, array $options): string
     {
         return hash($this->name, $options['currentValue']);
     }

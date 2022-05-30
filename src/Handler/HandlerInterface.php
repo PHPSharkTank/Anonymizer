@@ -8,5 +8,5 @@ interface HandlerInterface
 {
     public function getName(): string;
 
-    public function process($object, array $options);
+    public function process(mixed $value, array $options): mixed;
 }
