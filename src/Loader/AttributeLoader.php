@@ -14,7 +14,7 @@ use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 
-final class AnnotationLoader implements LoaderInterface
+final class AttributeLoader implements LoaderInterface
 {
     public function getMetadataFor(string $className): ClassMetadataInfo
     {
