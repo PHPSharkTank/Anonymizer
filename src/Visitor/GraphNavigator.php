@@ -8,7 +8,6 @@ use PHPSharkTank\Anonymizer\Event\PostAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Event\PreAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
 use PHPSharkTank\Anonymizer\ExclusionStrategy\ChainExclusionStrategy;
-use PHPSharkTank\Anonymizer\ExclusionStrategy\FalseStrategy;
 use PHPSharkTank\Anonymizer\ExclusionStrategy\StrategyInterface;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
