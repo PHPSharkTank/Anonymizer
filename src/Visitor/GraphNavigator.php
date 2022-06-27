@@ -7,8 +7,9 @@ namespace PHPSharkTank\Anonymizer\Visitor;
 use PHPSharkTank\Anonymizer\Event\PostAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Event\PreAnonymizeEvent;
 use PHPSharkTank\Anonymizer\Exception\MetadataNotFoundException;
+use PHPSharkTank\Anonymizer\ExclusionStrategy\ChainExclusionStrategy;
+use PHPSharkTank\Anonymizer\ExclusionStrategy\FalseStrategy;
 use PHPSharkTank\Anonymizer\ExclusionStrategy\StrategyInterface;
-use PHPSharkTank\Anonymizer\HasBeenAnonymizedInterface;
 use PHPSharkTank\Anonymizer\Loader\LoaderInterface;
 use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 use PHPSharkTank\Anonymizer\Registry\HandlerRegistryInterface;
@@ -16,28 +17,15 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface
 {
-    private LoaderInterface $loader;
-
-    private HandlerRegistryInterface $registry;
-
     private \SplStack $stack;
 
-    private EventDispatcherInterface $dispatcher;
-
-    private StrategyInterface $exclusionStrategy;
-
     public function __construct(
-        LoaderInterface $loader,
-        HandlerRegistryInterface $registry,
-        StrategyInterface $exclusionStrategy,
-        EventDispatcherInterface $dispatcher
+        private readonly LoaderInterface $loader,
+        private readonly HandlerRegistryInterface $registry,
+        private readonly StrategyInterface $exclusionStrategy = new ChainExclusionStrategy([]),
+        private readonly ?EventDispatcherInterface $dispatcher = null,
     ) {
-        $this->loader = $loader;
-        $this->registry = $registry;
-
         $this->stack = new \SplStack();
-        $this->dispatcher = $dispatcher;
-        $this->exclusionStrategy = $exclusionStrategy;
     }
 
     public function visit(mixed $value): void
@@ -57,19 +45,22 @@ final class GraphNavigator implements GraphNavigatorInterface
             return;
         }
 
-        $event = new PreAnonymizeEvent($object);
-
         foreach ($classMetadata->preAnonymizeable as $methodName) {
-            $object->{$methodName}($event);
+            $object->{$methodName}();
         }
 
-        $this->dispatcher->dispatch($event);
+        if (null !== $this->dispatcher) {
+            $event = new PreAnonymizeEvent($object);
+            $this->dispatcher->dispatch($event);
 
-        if ($event->isTerminated() || $this->exclusionStrategy->shouldSkipObject($object, $classMetadata)) {
+            if ($event->isTerminated()) {
+                return;
+            }
+        }
+
+        if ($this->exclusionStrategy->shouldSkipObject($object, $classMetadata)) {
             return;
         }
-
-        $this->dispatcher->dispatch($event = new PreAnonymizeEvent($object));
 
         $this->stack->push($classMetadata);
 
@@ -82,14 +73,10 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
 
         foreach ($classMetadata->postAnonymizeable as $methodName) {
-            $object->{$methodName}($event);
+            $object->{$methodName}();
         }
 
-        $this->dispatcher->dispatch(new PostAnonymizeEvent($object));
-
-        if ($object instanceof HasBeenAnonymizedInterface) {
-            $object->beenAnonymized();
-        }
+        $this->dispatcher?->dispatch(new PostAnonymizeEvent($object));
 
         $this->stack->pop();
     }
