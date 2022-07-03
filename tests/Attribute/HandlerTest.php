@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\Anonymizer\Tests\Annotation;
+namespace PHPSharkTank\Anonymizer\Tests\Attribute;
 
-use PHPSharkTank\Anonymizer\Annotation\Handler;
+use PHPSharkTank\Anonymizer\Attribute\Handler;
 use PHPUnit\Framework\TestCase;
 
 class HandlerTest extends TestCase

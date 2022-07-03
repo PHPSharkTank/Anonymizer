@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Tests\ExclusionStrategy;
 
-use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
-use PHPSharkTank\Anonymizer\Annotation\Handler;
-use PHPSharkTank\Anonymizer\Annotation\Skip;
+use PHPSharkTank\Anonymizer\Attribute\EnableAnonymize;
+use PHPSharkTank\Anonymizer\Attribute\Handler;
+use PHPSharkTank\Anonymizer\Attribute\Skip;
 use PHPSharkTank\Anonymizer\ExclusionStrategy\ExpressionExclusionStrategy;
 use PHPSharkTank\Anonymizer\Loader\AttributeLoader;
 use PHPUnit\Framework\TestCase;

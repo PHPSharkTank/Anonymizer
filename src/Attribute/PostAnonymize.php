@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\Anonymizer\Annotation;
+namespace PHPSharkTank\Anonymizer\Attribute;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-class PreAnonymize
+class PostAnonymize
 {
 }

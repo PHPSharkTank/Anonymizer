@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Tests\Handler;
 
-use PHPSharkTank\Anonymizer\Annotation\EnableAnonymize;
-use PHPSharkTank\Anonymizer\Annotation\Handler;
+use PHPSharkTank\Anonymizer\Attribute\EnableAnonymize;
+use PHPSharkTank\Anonymizer\Attribute\Handler;
 use PHPSharkTank\Anonymizer\Handler\CallbackHandler;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;

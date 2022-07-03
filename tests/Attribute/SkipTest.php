@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPSharkTank\Anonymizer\Tests\Annotation;
+namespace PHPSharkTank\Anonymizer\Tests\Attribute;
 
-use PHPSharkTank\Anonymizer\Annotation\Skip;
+use PHPSharkTank\Anonymizer\Attribute\Skip;
 use PHPUnit\Framework\TestCase;
 
 class SkipTest extends TestCase
