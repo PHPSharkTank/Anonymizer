@@ -14,7 +14,7 @@ final class ChainExclusionStrategy implements StrategyInterface
      */
     private array $strategies = [];
 
-    public function __construct(iterable $strategies)
+    public function __construct(iterable $strategies = [])
     {
         foreach ($strategies as $strategy) {
             $this->add($strategy);
