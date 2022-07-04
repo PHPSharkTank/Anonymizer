@@ -1,3 +1,5 @@
+[![Latest Stable Version](http://poser.pugx.org/php-shark-tank/anonymizer/v)](https://packagist.org/packages/php-shark-tank/anonymizer) [![Total Downloads](http://poser.pugx.org/php-shark-tank/anonymizer/downloads)](https://packagist.org/packages/php-shark-tank/anonymizer) [![Latest Unstable Version](http://poser.pugx.org/php-shark-tank/anonymizer/v/unstable)](https://packagist.org/packages/php-shark-tank/anonymizer) [![License](http://poser.pugx.org/php-shark-tank/anonymizer/license)](https://packagist.org/packages/php-shark-tank/anonymizer)
+
 The Anonymizer is a library for PHP applications to make it
 easy to modify data of any object using PHP Attributes or other
 structured configurations.
