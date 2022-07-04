@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Registry;
 
-use function iter\toArray;
 use PHPSharkTank\Anonymizer\Exception\HandlerNotFoundException;
 use PHPSharkTank\Anonymizer\Exception\RuntimeException;
 use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
@@ -18,7 +17,7 @@ class ChainHandlerRegistry implements HandlerRegistryInterface
 
     public function __construct(iterable $registries)
     {
-        $this->registries = toArray($registries);
+        $this->registries = [...$registries];
     }
 
     public function get(string $name): HandlerInterface
