@@ -69,7 +69,7 @@ class PropertyMetadata
         return [
             'name',
             'className',
-            'type',
+            'handler',
             'options',
             'expr',
         ];
