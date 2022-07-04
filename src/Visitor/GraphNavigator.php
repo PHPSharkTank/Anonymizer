@@ -44,6 +44,10 @@ final class GraphNavigator implements GraphNavigatorInterface
             return;
         }
 
+        if ($this->exclusionStrategy->shouldSkipObject($object, $classMetadata)) {
+            return;
+        }
+
         foreach ($classMetadata->preAnonymizeable as $methodName) {
             $object->{$methodName}();
         }
@@ -55,10 +59,6 @@ final class GraphNavigator implements GraphNavigatorInterface
             if ($event->isTerminated()) {
                 return;
             }
-        }
-
-        if ($this->exclusionStrategy->shouldSkipObject($object, $classMetadata)) {
-            return;
         }
 
         $this->stack->push($classMetadata);
