@@ -16,16 +16,12 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class GraphNavigator implements GraphNavigatorInterface
 {
-    private \SplStack $stack;
-
     public function __construct(
         private readonly LoaderInterface $loader,
         private readonly HandlerRegistryInterface $registry,
         private readonly StrategyInterface $exclusionStrategy = new ChainExclusionStrategy([]),
         private readonly ?EventDispatcherInterface $dispatcher = null,
-    ) {
-        $this->stack = new \SplStack();
-    }
+    ) {}
 
     public function visit(mixed $value): void
     {
@@ -61,8 +57,6 @@ final class GraphNavigator implements GraphNavigatorInterface
             }
         }
 
-        $this->stack->push($classMetadata);
-
         foreach ($classMetadata->getPropertyMetadata() as $metadata) {
             if ($this->exclusionStrategy->shouldSkipProperty($object, $metadata)) {
                 continue;
@@ -76,8 +70,6 @@ final class GraphNavigator implements GraphNavigatorInterface
         }
 
         $this->dispatcher?->dispatch(new PostAnonymizeEvent($object));
-
-        $this->stack->pop();
     }
 
     private function visitIterable(iterable $value): void
