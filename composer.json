@@ -4,22 +4,26 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^8.1",
-        "fakerphp/faker": "^1.13",
-        "psr/cache": "^1.0 || || ^2.0 || ^3.0",
-        "psr/event-dispatcher": "^1.0",
-        "symfony/yaml": "^4.4 || ^5.4 || ^6.1"
+        "php": "^8.1"
     },
     "require-dev": {
+        "fakerphp/faker": "^1.13",
         "friendsofphp/php-cs-fixer": "^3.8",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.11",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/phpstan": "^1.7",
         "phpunit/phpunit": "^9",
-        "symfony/expression-language": "^4.4 || ^5.4 || ^6.1"
+        "psr/event-dispatcher": "^1.0",
+        "psr/cache": "^1.0 || ^2.0 || ^3.0",
+        "symfony/expression-language": "^4.4 || ^5.4 || ^6.1",
+        "symfony/yaml": "^4.4 || ^5.4 || ^6.1"
     },
     "suggest": {
-        "symfony/expression-language": "Needed to use ExpressionExclusionStrategy"
+        "fakerphp/faker": "Needed to use FakerHandler(Registry)",
+        "psr-event-dispatcher": "Needed to use EventDispatcher in the default GraphNavigator",
+        "psr/cache": "Needed to use CachingLoader",
+        "symfony/expression-language": "Needed to use ExpressionExclusionStrategy",
+        "symfony/yaml": "Needed to use YamlFileLoader"
     },
     "autoload": {
         "psr-4": {
