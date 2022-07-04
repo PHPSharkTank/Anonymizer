@@ -53,7 +53,7 @@ class CachingLoaderTest extends TestCase
 
         $item = $this->prophesize(CacheItemInterface::class);
         $item->isHit()->willReturn(false);
-        $item->set($metadata)->shouldBeCalled();
+        $item->set($metadata)->shouldBeCalled()->willReturn($item->reveal());
 
         $this->pool->getItem('09a15e9660c1ebc6f429d818825ce0c6')->willReturn($item->reveal());
         $this->pool->save($item->reveal())->shouldBeCalled();
