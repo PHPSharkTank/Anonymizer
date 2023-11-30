@@ -16,7 +16,7 @@
         "psr/event-dispatcher": "^1.0",
         "psr/cache": "^1.0 || ^2.0 || ^3.0",
         "symfony/expression-language": "^4.4 || ^5.4 || ^6.2",
-        "symfony/yaml": "^4.4 || ^5.4 || ^6.2"
+        "symfony/yaml": "^4.4 || ^5.4 || ^6.2 || ^7.0"
     },
     "suggest": {
         "fakerphp/faker": "Needed to use FakerHandler(Registry)",
