@@ -12,7 +12,7 @@
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.13",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9",
+        "phpunit/phpunit": "^9 || ^10",
         "psr/event-dispatcher": "^1.0",
         "psr/cache": "^1.0 || ^2.0 || ^3.0",
         "symfony/expression-language": "^4.4 || ^5.4 || ^6.2",
