@@ -70,3 +70,44 @@ jobs:
       - name: PHP CS Fixer
         run: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff
 
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.5'
+          coverage: pcov
+
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
+
+      - name: PHPUnit with coverage
+        run: vendor/bin/phpunit --colors=never --coverage-clover build/coverage.xml --coverage-text=build/coverage.txt
+
+      - name: Coverage summary
+        run: |
+          {
+            echo '### Coverage'
+            echo '```'
+            cat build/coverage.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage
+          path: build/coverage.xml
+
+      - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          files: build/coverage.xml
+          disable_search: true
+          # forks get no OIDC token, codecov falls back to tokenless upload for public repos
+          use_oidc: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork) }}
+          fail_ci_if_error: false
+

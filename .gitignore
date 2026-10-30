@@ -12,3 +12,4 @@ phpunit.xml
 /.build
 
 /.phpunit.cache
+/build
