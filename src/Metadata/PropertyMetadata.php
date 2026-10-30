@@ -13,6 +13,9 @@ class PropertyMetadata
 
     private string $name;
 
+    /**
+     * @var class-string
+     */
     private string $className;
 
     private string $handler;
@@ -24,6 +27,9 @@ class PropertyMetadata
 
     public string $expr = '';
 
+    /**
+     * @param class-string $class
+     */
     public function __construct(string $class, string $propertyName, string $handler = 'text')
     {
         $this->className = $class;
@@ -31,7 +37,6 @@ class PropertyMetadata
         $this->handler = $handler;
 
         $this->reflection = new \ReflectionProperty($this->className, $propertyName);
-        $this->reflection->setAccessible(true);
     }
 
     public function setValue(object $object, mixed $value): void
@@ -54,30 +59,47 @@ class PropertyMetadata
         return $this->handler;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function setOptions(array $options): void
     {
         $this->options = $options;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function __sleep(): array
+    /**
+     * @return array{name: string, className: class-string, handler: string, options: array<string, mixed>, expr: string}
+     */
+    public function __serialize(): array
     {
         return [
-            'name',
-            'className',
-            'handler',
-            'options',
-            'expr',
+            'name' => $this->name,
+            'className' => $this->className,
+            'handler' => $this->handler,
+            'options' => $this->options,
+            'expr' => $this->expr,
         ];
     }
 
-    public function __wakeup(): void
+    /**
+     * @param array{name: string, className: class-string, handler: string, options: array<string, mixed>, expr: string} $data
+     */
+    public function __unserialize(array $data): void
     {
+        $this->name = $data['name'];
+        $this->className = $data['className'];
+        $this->handler = $data['handler'];
+        $this->options = $data['options'];
+        $this->expr = $data['expr'];
+
         $this->reflection = new \ReflectionProperty($this->className, $this->name);
-        $this->reflection->setAccessible(true);
     }
 }

@@ -28,6 +28,9 @@ class ClassMetadataInfo
      */
     public array $postAnonymizeable = [];
 
+    /**
+     * @var \ReflectionClass<object>
+     */
     public \ReflectionClass $reflection;
 
     public string $expr = '';
@@ -48,6 +51,9 @@ class ClassMetadataInfo
         $this->propertyMetadata[$metadata->getName()] = $metadata;
     }
 
+    /**
+     * @return array<string, PropertyMetadata>
+     */
     public function getPropertyMetadata(): array
     {
         return $this->propertyMetadata;
@@ -66,19 +72,31 @@ class ClassMetadataInfo
         }
     }
 
-    public function __sleep(): array
+    /**
+     * @return array{className: class-string, propertyMetadata: array<string, PropertyMetadata>, expr: string, preAnonymizeable: array<string>, postAnonymizeable: array<string>}
+     */
+    public function __serialize(): array
     {
         return [
-            'className',
-            'propertyMetadata',
-            'expr',
-            'preAnonymizeable',
-            'postAnonymizeable',
+            'className' => $this->className,
+            'propertyMetadata' => $this->propertyMetadata,
+            'expr' => $this->expr,
+            'preAnonymizeable' => $this->preAnonymizeable,
+            'postAnonymizeable' => $this->postAnonymizeable,
         ];
     }
 
-    public function __wakeup(): void
+    /**
+     * @param array{className: class-string, propertyMetadata: array<string, PropertyMetadata>, expr: string, preAnonymizeable: array<string>, postAnonymizeable: array<string>} $data
+     */
+    public function __unserialize(array $data): void
     {
+        $this->className = $data['className'];
+        $this->propertyMetadata = $data['propertyMetadata'];
+        $this->expr = $data['expr'];
+        $this->preAnonymizeable = $data['preAnonymizeable'];
+        $this->postAnonymizeable = $data['postAnonymizeable'];
+
         $this->reflection = new \ReflectionClass($this->className);
     }
 }
