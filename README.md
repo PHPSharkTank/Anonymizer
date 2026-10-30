@@ -1,4 +1,14 @@
-[![Latest Stable Version](http://poser.pugx.org/php-shark-tank/anonymizer/v)](https://packagist.org/packages/php-shark-tank/anonymizer) [![Total Downloads](http://poser.pugx.org/php-shark-tank/anonymizer/downloads)](https://packagist.org/packages/php-shark-tank/anonymizer) [![Latest Unstable Version](http://poser.pugx.org/php-shark-tank/anonymizer/v/unstable)](https://packagist.org/packages/php-shark-tank/anonymizer) [![License](http://poser.pugx.org/php-shark-tank/anonymizer/license)](https://packagist.org/packages/php-shark-tank/anonymizer)
+# Anonymizer
+
+[![CI](https://github.com/PHPSharkTank/Anonymizer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/PHPSharkTank/Anonymizer/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/PHPSharkTank/Anonymizer/branch/main/graph/badge.svg)](https://codecov.io/gh/PHPSharkTank/Anonymizer)
+[![PHPStan](https://img.shields.io/badge/PHPStan-level%20max-brightgreen.svg)](https://phpstan.org/)
+[![semantic-release](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+
+[![Latest Stable Version](https://img.shields.io/packagist/v/php-shark-tank/anonymizer)](https://packagist.org/packages/php-shark-tank/anonymizer)
+[![Total Downloads](https://img.shields.io/packagist/dt/php-shark-tank/anonymizer)](https://packagist.org/packages/php-shark-tank/anonymizer)
+[![PHP Version](https://img.shields.io/packagist/dependency-v/php-shark-tank/anonymizer/php)](https://packagist.org/packages/php-shark-tank/anonymizer)
+[![License](https://img.shields.io/packagist/l/php-shark-tank/anonymizer)](https://packagist.org/packages/php-shark-tank/anonymizer)
 
 The Anonymizer is a library for PHP applications to make it
 easy to modify data of any object using PHP Attributes or other
