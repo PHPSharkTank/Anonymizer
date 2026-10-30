@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: ['1.0']
+    branches: ['main']
   pull_request:
 
 permissions:
@@ -10,7 +10,8 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # never cancel a running release on main
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   tests:
@@ -35,15 +36,15 @@ jobs:
     env:
       SYMFONY_REQUIRE: ${{ matrix.symfony }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: ${{ matrix.php }}
           coverage: none
           tools: flex
 
-      - uses: ramsey/composer-install@v4
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: ${{ matrix.dependencies }}
 
@@ -54,17 +55,18 @@ jobs:
     name: PHPStan & PHP CS Fixer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: '8.5'
           coverage: none
 
-      - uses: ramsey/composer-install@v4
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
 
       - name: PHPStan
         run: vendor/bin/phpstan analyse -c phpstan.neon --no-progress --error-format=github --memory-limit=512M
 
       - name: PHP CS Fixer
         run: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff
+
