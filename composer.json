@@ -4,23 +4,25 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^8.2"
+        "php": ">=8.2 <8.6"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.13",
-        "friendsofphp/php-cs-fixer": "^3.14",
-        "kubawerlos/php-cs-fixer-custom-fixers": "^3.13",
-        "phpspec/prophecy-phpunit": "^2.0",
-        "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9",
+        "fakerphp/faker": "^1.24",
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "jangregor/phpstan-prophecy": "^2.3",
+        "kubawerlos/php-cs-fixer-custom-fixers": "^3.37",
+        "phpspec/prophecy-phpunit": "^2.5",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.3",
+        "phpunit/phpunit": "^11.5 || ^12.5 || ^13.4",
+        "psr/cache": "^3.0",
         "psr/event-dispatcher": "^1.0",
-        "psr/cache": "^1.0 || ^2.0 || ^3.0",
-        "symfony/expression-language": "^4.4 || ^5.4 || ^6.2",
-        "symfony/yaml": "^4.4 || ^5.4 || ^6.2"
+        "symfony/expression-language": "^6.4 || ^7.4 || ^8.1",
+        "symfony/yaml": "^6.4 || ^7.4 || ^8.1"
     },
     "suggest": {
         "fakerphp/faker": "Needed to use FakerHandler(Registry)",
-        "psr-event-dispatcher": "Needed to use EventDispatcher in the default GraphNavigator",
+        "psr/event-dispatcher": "Needed to use EventDispatcher in the default GraphNavigator",
         "psr/cache": "Needed to use CachingLoader",
         "symfony/expression-language": "Needed to use ExpressionExclusionStrategy",
         "symfony/yaml": "Needed to use YamlFileLoader"
@@ -46,7 +48,10 @@
         }
     ],
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "branch-alias": {
