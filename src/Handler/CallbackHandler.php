@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PHPSharkTank\Anonymizer\Handler;
 
+use PHPSharkTank\Anonymizer\Exception\LogicException;
+
 class CallbackHandler implements HandlerInterface
 {
     public function getName(): string
@@ -11,6 +13,9 @@ class CallbackHandler implements HandlerInterface
         return 'callback';
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function process(mixed $value, array $options): mixed
     {
         if (isset($options['method'])) {
@@ -20,6 +25,12 @@ class CallbackHandler implements HandlerInterface
             }
         }
 
-        return \call_user_func($options['callback']);
+        $callback = $options['callback'] ?? null;
+
+        if (!\is_callable($callback)) {
+            throw new LogicException('The callback handler requires either a public "method" of the object or a callable "callback" option.');
+        }
+
+        return $callback();
     }
 }

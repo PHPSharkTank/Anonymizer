@@ -39,13 +39,11 @@ class CallbackHandlerTest extends TestCase
     public function testProcessWitHCallback(): void
     {
         $value = new \stdClass();
-        $callback = static function () {
-            self::assertTrue(true);
-        };
+        $callback = static fn (): string => 'anonymized';
 
-        $this->handler->process($value, [
+        self::assertSame('anonymized', $this->handler->process($value, [
             'callback' => $callback,
-        ]);
+        ]));
     }
 }
 
@@ -58,5 +56,10 @@ class User
     public function removeName(): void
     {
         $this->name = null;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 }
