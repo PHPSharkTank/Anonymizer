@@ -28,7 +28,7 @@ class FakerHandlerRegistry implements HandlerRegistryInterface
             }
         }
 
-        throw new RuntimeException(sprintf('Handler %s was not registered before.', $name));
+        throw new RuntimeException(\sprintf('Handler %s was not registered before.', $name));
     }
 
     public function register(HandlerInterface $handler): void

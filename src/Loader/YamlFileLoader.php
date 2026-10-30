@@ -12,7 +12,7 @@ use Symfony\Component\Yaml\Yaml;
 class YamlFileLoader implements LoaderInterface
 {
     public function __construct(
-        private array $paths
+        private array $paths,
     ) {}
 
     public function addYamlPath(string $path): void
@@ -32,11 +32,11 @@ class YamlFileLoader implements LoaderInterface
                 $metadataConfig = array_merge_recursive($metadataConfig, $fileContent);
             }
         }
-        if (!array_key_exists($className, $metadataConfig)) {
-            throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $className));
+        if (!\array_key_exists($className, $metadataConfig)) {
+            throw new MetadataNotFoundException(\sprintf('The class %s is not enabled for anonymization', $className));
         }
 
-        if (array_key_exists('skip', $metadataConfig[$className])) {
+        if (\array_key_exists('skip', $metadataConfig[$className])) {
             $metadata->expr = $metadataConfig[$className]['skip'];
         }
 
@@ -47,14 +47,14 @@ class YamlFileLoader implements LoaderInterface
         }
 
         foreach ($metadataConfig[$className]['methods'] ?? [] as $method => $settings) {
-            if (array_key_exists('preAnonymize', $settings) && $settings['preAnonymize']) {
-                if (!in_array($method, $metadata->preAnonymizeable)) {
+            if (\array_key_exists('preAnonymize', $settings) && $settings['preAnonymize']) {
+                if (!\in_array($method, $metadata->preAnonymizeable)) {
                     $metadata->preAnonymizeable[] = $method;
                 }
             }
 
-            if (array_key_exists('postAnonymize', $settings) && $settings['postAnonymize']) {
-                if (!in_array($method, $metadata->postAnonymizeable)) {
+            if (\array_key_exists('postAnonymize', $settings) && $settings['postAnonymize']) {
+                if (!\in_array($method, $metadata->postAnonymizeable)) {
                     $metadata->postAnonymizeable[] = $method;
                 }
             }

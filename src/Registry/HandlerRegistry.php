@@ -21,8 +21,8 @@ final class HandlerRegistry implements HandlerRegistryInterface
 
     public function get(string $name): HandlerInterface
     {
-        if (false === array_key_exists($name, $this->handlers)) {
-            throw new RuntimeException(sprintf('Handler %s was not registered before.', $name));
+        if (false === \array_key_exists($name, $this->handlers)) {
+            throw new RuntimeException(\sprintf('Handler %s was not registered before.', $name));
         }
 
         return $this->handlers[$name];
@@ -32,8 +32,8 @@ final class HandlerRegistry implements HandlerRegistryInterface
     {
         $name = $handler->getName();
 
-        if (array_key_exists($name, $this->handlers)) {
-            throw new LogicException(sprintf('%s already taken as identifier', $name));
+        if (\array_key_exists($name, $this->handlers)) {
+            throw new LogicException(\sprintf('%s already taken as identifier', $name));
         }
 
         $this->handlers[$name] = $handler;
@@ -41,8 +41,8 @@ final class HandlerRegistry implements HandlerRegistryInterface
 
     public function unregister(string $name): void
     {
-        if (false === array_key_exists($name, $this->handlers)) {
-            throw new LogicException(sprintf('Handler %s was not registered before.', $name));
+        if (false === \array_key_exists($name, $this->handlers)) {
+            throw new LogicException(\sprintf('Handler %s was not registered before.', $name));
         }
 
         unset($this->handlers[$name]);

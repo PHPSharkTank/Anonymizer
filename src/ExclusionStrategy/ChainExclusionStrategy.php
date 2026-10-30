@@ -10,7 +10,7 @@ use PHPSharkTank\Anonymizer\Metadata\PropertyMetadata;
 final class ChainExclusionStrategy implements StrategyInterface
 {
     /**
-     * @var StrategyInterface[]
+     * @var array<StrategyInterface>
      */
     private array $strategies = [];
 
@@ -29,7 +29,7 @@ final class ChainExclusionStrategy implements StrategyInterface
     public function shouldSkipObject(object $object, ClassMetadataInfo $metadataInfo): bool
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->shouldSkipObject(...func_get_args())) {
+            if ($strategy->shouldSkipObject(...\func_get_args())) {
                 return true;
             }
         }
@@ -40,7 +40,7 @@ final class ChainExclusionStrategy implements StrategyInterface
     public function shouldSkipProperty(object $object, PropertyMetadata $metadata): bool
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->shouldSkipProperty(...func_get_args())) {
+            if ($strategy->shouldSkipProperty(...\func_get_args())) {
                 return true;
             }
         }

@@ -19,7 +19,7 @@ final class ExpressionExclusionStrategy implements StrategyInterface
 
     public function shouldSkipObject(object $object, ClassMetadataInfo $metadataInfo): bool
     {
-        if (0 === strlen($metadataInfo->expr)) {
+        if ('' === $metadataInfo->expr) {
             return false;
         }
 
@@ -28,7 +28,7 @@ final class ExpressionExclusionStrategy implements StrategyInterface
 
     public function shouldSkipProperty(object $object, PropertyMetadata $metadata): bool
     {
-        if (0 === strlen($metadata->expr)) {
+        if ('' === $metadata->expr) {
             return false;
         }
 

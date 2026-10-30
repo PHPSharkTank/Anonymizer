@@ -11,7 +11,7 @@ use PHPSharkTank\Anonymizer\Handler\HandlerInterface;
 class ChainHandlerRegistry implements HandlerRegistryInterface
 {
     /**
-     * @var HandlerRegistryInterface[]
+     * @var array<HandlerRegistryInterface>
      */
     private array $registries;
 
@@ -30,7 +30,7 @@ class ChainHandlerRegistry implements HandlerRegistryInterface
             }
         }
 
-        throw new HandlerNotFoundException(sprintf('No matching handler found for %s in registry', $name));
+        throw new HandlerNotFoundException(\sprintf('No matching handler found for %s in registry', $name));
     }
 
     public function register(HandlerInterface $handler): void

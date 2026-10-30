@@ -24,7 +24,7 @@ class ChainExclusionStrategyTest extends TestCase
     public function testShouldSkipObjectFalseWithStrategy(): void
     {
         $class = new TestObject();
-        $meta = new ClassMetadataInfo(get_class($class));
+        $meta = new ClassMetadataInfo($class::class);
 
         $strategy = $this->prophesize(StrategyInterface::class);
         $strategy->shouldSkipObject($class, $meta)->shouldBeCalledOnce()->willReturn(false);
@@ -36,7 +36,7 @@ class ChainExclusionStrategyTest extends TestCase
     public function testShouldSkipObjectTrue(): void
     {
         $class = new TestObject();
-        $meta = new ClassMetadataInfo(get_class($class));
+        $meta = new ClassMetadataInfo($class::class);
 
         $strategy1 = $this->prophesize(StrategyInterface::class);
         $strategy1->shouldSkipObject($class, $meta)->shouldBeCalledOnce()->willReturn(false);
@@ -51,7 +51,7 @@ class ChainExclusionStrategyTest extends TestCase
     public function testShouldSkipPropertyFalseWithStrategy(): void
     {
         $class = new TestObject();
-        $meta = new PropertyMetadata(get_class($class), 'value');
+        $meta = new PropertyMetadata($class::class, 'value');
 
         $strategy = $this->prophesize(StrategyInterface::class);
         $strategy->shouldSkipProperty($class, $meta)->shouldBeCalledOnce()->willReturn(false);
@@ -63,7 +63,7 @@ class ChainExclusionStrategyTest extends TestCase
     public function testShouldSkipPropertyTrue(): void
     {
         $class = new TestObject();
-        $meta = new PropertyMetadata(get_class($class), 'value');
+        $meta = new PropertyMetadata($class::class, 'value');
 
         $strategy1 = $this->prophesize(StrategyInterface::class);
         $strategy1->shouldSkipProperty($class, $meta)->shouldBeCalledOnce()->willReturn(false);

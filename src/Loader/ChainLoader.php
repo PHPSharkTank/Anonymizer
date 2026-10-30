@@ -30,7 +30,7 @@ class ChainLoader implements LoaderInterface
         }
 
         if (!$findLoader) {
-            throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $className));
+            throw new MetadataNotFoundException(\sprintf('The class %s is not enabled for anonymization', $className));
         }
 
         return $metadata;

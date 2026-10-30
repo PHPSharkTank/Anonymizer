@@ -19,12 +19,12 @@ class ClassMetadataInfo
     public array $propertyMetadata = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     public array $preAnonymizeable = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     public array $postAnonymizeable = [];
 
@@ -35,7 +35,7 @@ class ClassMetadataInfo
     public function __construct(string $className)
     {
         if (!class_exists($className)) {
-            throw new LogicException(sprintf('%s is not a vaid class', $className));
+            throw new LogicException(\sprintf('%s is not a vaid class', $className));
         }
 
         $this->className = $className;
@@ -53,7 +53,7 @@ class ClassMetadataInfo
         return $this->propertyMetadata;
     }
 
-    public function merge(ClassMetadataInfo $metadataInfo): void
+    public function merge(self $metadataInfo): void
     {
         foreach ($metadataInfo->propertyMetadata as $name => $metadata) {
             $this->propertyMetadata[$name] = $metadata;

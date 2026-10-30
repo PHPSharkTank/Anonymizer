@@ -30,7 +30,7 @@ class ExpressionExclusionStrategyTest extends TestCase
         $object = new StrategyTestObjectWithoutSkip();
         $strategy = new ExpressionExclusionStrategy($this->expressionLanguage->reveal());
 
-        self::assertFalse($strategy->shouldSkipObject($object, (new AttributeLoader())->getMetadataFor(get_class($object))));
+        self::assertFalse($strategy->shouldSkipObject($object, (new AttributeLoader())->getMetadataFor($object::class)));
     }
 
     public function testShouldSkipObjectWithExpressionFalse(): void
@@ -40,7 +40,7 @@ class ExpressionExclusionStrategyTest extends TestCase
 
         $strategy = new ExpressionExclusionStrategy($this->expressionLanguage->reveal());
 
-        self::assertFalse($strategy->shouldSkipObject($object, (new AttributeLoader())->getMetadataFor(get_class($object))));
+        self::assertFalse($strategy->shouldSkipObject($object, (new AttributeLoader())->getMetadataFor($object::class)));
     }
 
     public function testShouldSkipObjectWithExpressionTrue(): void
@@ -50,7 +50,7 @@ class ExpressionExclusionStrategyTest extends TestCase
 
         $strategy = new ExpressionExclusionStrategy($this->expressionLanguage->reveal());
 
-        self::assertTrue($strategy->shouldSkipObject($object, (new AttributeLoader())->getMetadataFor(get_class($object))));
+        self::assertTrue($strategy->shouldSkipObject($object, (new AttributeLoader())->getMetadataFor($object::class)));
     }
 
     public function testShouldSkipPropertyWithoutExpression(): void
@@ -58,7 +58,7 @@ class ExpressionExclusionStrategyTest extends TestCase
         $object = new StrategyTestObjectWithoutSkip();
         $strategy = new ExpressionExclusionStrategy($this->expressionLanguage->reveal());
 
-        self::assertFalse($strategy->shouldSkipProperty($object, (new AttributeLoader())->getMetadataFor(get_class($object))->getPropertyMetadata()['lastName']));
+        self::assertFalse($strategy->shouldSkipProperty($object, (new AttributeLoader())->getMetadataFor($object::class)->getPropertyMetadata()['lastName']));
     }
 
     public function testShouldSkipPropertyWithExpressionFalse(): void
@@ -68,7 +68,7 @@ class ExpressionExclusionStrategyTest extends TestCase
 
         $strategy = new ExpressionExclusionStrategy($this->expressionLanguage->reveal());
 
-        self::assertFalse($strategy->shouldSkipProperty($object, (new AttributeLoader())->getMetadataFor(get_class($object))->getPropertyMetadata()['lastName']));
+        self::assertFalse($strategy->shouldSkipProperty($object, (new AttributeLoader())->getMetadataFor($object::class)->getPropertyMetadata()['lastName']));
     }
 
     public function testShouldSkipPropertyWithExpressionTrue(): void
@@ -78,7 +78,7 @@ class ExpressionExclusionStrategyTest extends TestCase
 
         $strategy = new ExpressionExclusionStrategy($this->expressionLanguage->reveal());
 
-        self::assertTrue($strategy->shouldSkipProperty($object, (new AttributeLoader())->getMetadataFor(get_class($object))->getPropertyMetadata()['lastName']));
+        self::assertTrue($strategy->shouldSkipProperty($object, (new AttributeLoader())->getMetadataFor($object::class)->getPropertyMetadata()['lastName']));
     }
 }
 

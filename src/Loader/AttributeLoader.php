@@ -23,13 +23,13 @@ final class AttributeLoader implements LoaderInterface
 
         $attributes = $reflectionClass->getAttributes(EnableAnonymize::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-        if (0 === count($attributes)) {
-            throw new MetadataNotFoundException(sprintf('The class %s is not enabled for anonymization', $className));
+        if (0 === \count($attributes)) {
+            throw new MetadataNotFoundException(\sprintf('The class %s is not enabled for anonymization', $className));
         }
 
         $exprAttributes = $reflectionClass->getAttributes(Skip::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-        if (count($exprAttributes)) {
+        if (\count($exprAttributes)) {
             /** @var Skip $skip */
             $skip = $exprAttributes[0]->newInstance();
             $metadata->expr = $skip->value;
@@ -38,7 +38,7 @@ final class AttributeLoader implements LoaderInterface
         foreach ($reflectionClass->getProperties() as $property) {
             $propertyAttributes = $property->getAttributes(Handler::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-            if (0 === count($propertyAttributes)) {
+            if (0 === \count($propertyAttributes)) {
                 continue;
             }
 
@@ -50,7 +50,7 @@ final class AttributeLoader implements LoaderInterface
 
             $exprAttributes = $property->getAttributes(Skip::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-            if (count($exprAttributes)) {
+            if (\count($exprAttributes)) {
                 /** @var Skip $skip */
                 $skip = $exprAttributes[0]->newInstance();
                 $propertyMetadata->expr = $skip->value;
@@ -61,19 +61,19 @@ final class AttributeLoader implements LoaderInterface
             $preMethodAttributes = $method->getAttributes(PreAnonymize::class, \ReflectionAttribute::IS_INSTANCEOF);
             $postMethodAttributes = $method->getAttributes(PostAnonymize::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-            if (count($preMethodAttributes)) {
+            if (\count($preMethodAttributes)) {
                 if ($method->isPublic()) {
                     $metadata->preAnonymizeable[] = $method->getName();
                 } else {
-                    throw new LogicException(sprintf('You can\'t define a #[PreAnonymize] attribute on a non public method.'));
+                    throw new LogicException('You can\'t define a #[PreAnonymize] attribute on a non public method.');
                 }
             }
 
-            if (count($postMethodAttributes)) {
+            if (\count($postMethodAttributes)) {
                 if ($method->isPublic()) {
                     $metadata->postAnonymizeable[] = $method->getName();
                 } else {
-                    throw new LogicException(sprintf('You can\'t define a #[PostAnonymize] attribute on a non public method.'));
+                    throw new LogicException('You can\'t define a #[PostAnonymize] attribute on a non public method.');
                 }
             }
         }

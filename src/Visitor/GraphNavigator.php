@@ -27,7 +27,7 @@ final class GraphNavigator implements GraphNavigatorInterface
     {
         if (is_iterable($value)) {
             $this->visitIterable($value);
-        } elseif (is_object($value)) {
+        } elseif (\is_object($value)) {
             $this->visitObject($value);
         }
     }
@@ -35,7 +35,7 @@ final class GraphNavigator implements GraphNavigatorInterface
     private function visitObject(object $object): void
     {
         try {
-            $classMetadata = $this->loader->getMetadataFor(get_class($object));
+            $classMetadata = $this->loader->getMetadataFor($object::class);
         } catch (MetadataNotFoundException) {
             return;
         }
@@ -83,7 +83,7 @@ final class GraphNavigator implements GraphNavigatorInterface
     {
         $currentValue = $metadata->getValue($object);
 
-        if (is_iterable($currentValue) || is_object($currentValue)) {
+        if (is_iterable($currentValue) || \is_object($currentValue)) {
             $this->visit($currentValue);
 
             return;
