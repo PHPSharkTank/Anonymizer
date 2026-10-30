@@ -23,6 +23,9 @@ class FakerHandler implements HandlerInterface
         return $this->name;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function process(mixed $value, array $options): mixed
     {
         unset($options['currentValue']);

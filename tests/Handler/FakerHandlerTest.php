@@ -14,7 +14,10 @@ class FakerHandlerTest extends TestCase
 {
     use ProphecyTrait;
 
-    private Generator|ObjectProphecy $generator;
+    /**
+     * @var ObjectProphecy<Generator>
+     */
+    private ObjectProphecy $generator;
 
     protected function setUp(): void
     {

@@ -23,7 +23,11 @@ final class CachingLoader implements LoaderInterface
     {
         $item = $this->pool->getItem(md5($className));
         if ($item->isHit()) {
-            return $item->get();
+            $metadata = $item->get();
+
+            if ($metadata instanceof ClassMetadataInfo) {
+                return $metadata;
+            }
         }
 
         $metadata = $this->delegate->getMetadataFor($className);

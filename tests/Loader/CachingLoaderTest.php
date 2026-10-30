@@ -20,9 +20,15 @@ class CachingLoaderTest extends TestCase
 
     private CachingLoader $loader;
 
-    private LoaderInterface|ObjectProphecy $delegate;
+    /**
+     * @var ObjectProphecy<LoaderInterface>
+     */
+    private ObjectProphecy $delegate;
 
-    private CacheItemPoolInterface|ObjectProphecy $pool;
+    /**
+     * @var ObjectProphecy<CacheItemPoolInterface>
+     */
+    private ObjectProphecy $pool;
 
     protected function setUp(): void
     {

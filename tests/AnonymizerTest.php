@@ -14,7 +14,10 @@ class AnonymizerTest extends TestCase
 {
     use ProphecyTrait;
 
-    private GraphNavigatorInterface|ObjectProphecy $navigator;
+    /**
+     * @var ObjectProphecy<GraphNavigatorInterface>
+     */
+    private ObjectProphecy $navigator;
 
     private Anonymizer $anonymizer;
 

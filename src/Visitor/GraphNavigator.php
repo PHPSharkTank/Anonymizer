@@ -72,6 +72,9 @@ final class GraphNavigator implements GraphNavigatorInterface
         $this->dispatcher?->dispatch(new PostAnonymizeEvent($object));
     }
 
+    /**
+     * @param iterable<mixed> $value
+     */
     private function visitIterable(iterable $value): void
     {
         foreach ($value as $item) {

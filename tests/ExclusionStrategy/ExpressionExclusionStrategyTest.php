@@ -18,7 +18,10 @@ class ExpressionExclusionStrategyTest extends TestCase
 {
     use ProphecyTrait;
 
-    private ExpressionLanguage|ObjectProphecy $expressionLanguage;
+    /**
+     * @var ObjectProphecy<ExpressionLanguage>
+     */
+    private ObjectProphecy $expressionLanguage;
 
     protected function setUp(): void
     {
@@ -86,7 +89,7 @@ class ExpressionExclusionStrategyTest extends TestCase
 class StrategyTestObjectWithoutSkip
 {
     #[Handler('callback', options: ['method' => 'removeName'])]
-    public $lastName = 'Name';
+    public ?string $lastName = 'Name';
 }
 
 #[EnableAnonymize]
@@ -94,11 +97,11 @@ class StrategyTestObjectWithoutSkip
 class StrategyTestObject
 {
     #[Handler('callback', options: ['method' => 'removeName'])]
-    public $name = 'Name';
+    public ?string $name = 'Name';
 
     #[Handler('callback', options: ['method' => 'removeName'])]
     #[Skip('expression')]
-    public $lastName = 'Name';
+    public ?string $lastName = 'Name';
 
     public function removeName(): void
     {

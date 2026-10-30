@@ -22,8 +22,8 @@ class FakerHandlerRegistry implements HandlerRegistryInterface
     {
         $fakerHandler = new FakerHandler($this->generator, $name);
 
-        foreach ($this->generator->getProviders() as $provider) {
-            if (method_exists($provider, $name)) {
+        foreach ((array) $this->generator->getProviders() as $provider) {
+            if (\is_object($provider) && method_exists($provider, $name)) {
                 return $fakerHandler;
             }
         }

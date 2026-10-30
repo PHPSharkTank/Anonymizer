@@ -15,6 +15,9 @@ class ChainHandlerRegistry implements HandlerRegistryInterface
      */
     private array $registries;
 
+    /**
+     * @param iterable<HandlerRegistryInterface> $registries
+     */
     public function __construct(iterable $registries)
     {
         $this->registries = [...$registries];

@@ -18,7 +18,10 @@ class FakerHandlerRegistryTest extends TestCase
 {
     use ProphecyTrait;
 
-    private Generator|ObjectProphecy $generator;
+    /**
+     * @var ObjectProphecy<Generator>
+     */
+    private ObjectProphecy $generator;
 
     private FakerHandlerRegistry $registry;
 

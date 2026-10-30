@@ -44,7 +44,7 @@ final class AttributeLoader implements LoaderInterface
 
             /** @var Handler $handler */
             $handler = $propertyAttributes[0]->newInstance();
-            $propertyMetadata = new PropertyMetadata($className, $property->getName(), $handler->value);
+            $propertyMetadata = new PropertyMetadata($metadata->className, $property->getName(), $handler->value);
             $propertyMetadata->setOptions($handler->options);
             $metadata->addPropertyMetadata($propertyMetadata);
 

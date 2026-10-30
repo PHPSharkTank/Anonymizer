@@ -6,13 +6,10 @@ help: ## Print Help
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
 
 cs: ## Let PHP CSFixer do the job
-	php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php -v --allow-risky=yes
+	symfony php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php -v --allow-risky=yes
 
 phpunit: ## PHPUnit is your friend - Run all Tests
-	XDEBUG_MODE=coverage php vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --coverage-html .build
+	XDEBUG_MODE=coverage symfony php vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --coverage-html .build
 
 stan: ## PHPSTAN Check <3
-	symfony php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M --xdebug
-
-psalm: ## Psalm Check
-	symfony php vendor/bin/psalm
+	symfony php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M

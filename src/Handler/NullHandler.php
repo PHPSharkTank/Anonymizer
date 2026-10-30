@@ -11,6 +11,9 @@ class NullHandler implements HandlerInterface
         return 'null';
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function process(mixed $value, array $options): mixed
     {
         return null;

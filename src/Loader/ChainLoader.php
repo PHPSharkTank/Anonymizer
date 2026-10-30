@@ -9,6 +9,9 @@ use PHPSharkTank\Anonymizer\Metadata\ClassMetadataInfo;
 
 class ChainLoader implements LoaderInterface
 {
+    /**
+     * @param iterable<LoaderInterface> $loaders
+     */
     public function __construct(
         private readonly iterable $loaders,
     ) {}
@@ -18,7 +21,6 @@ class ChainLoader implements LoaderInterface
         $metadata = new ClassMetadataInfo($className);
         $findLoader = false;
 
-        /** @var LoaderInterface $loader */
         foreach ($this->loaders as $loader) {
             try {
                 $metadata->merge($loader->getMetadataFor($className));
